@@ -157,14 +157,9 @@
 .sheet.is-open .sheet__card { transform: none; }
 .sheet__title { margin-top: 22px; font-size: 27px; font-weight: 600; letter-spacing: -0.02em; }
 .sheet__body { margin-top: 10px; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
-.slot { position: relative; width: 100%; aspect-ratio: 1.68 / 1; display: grid; place-items: center;
-  border-radius: var(--r-md); border: 1px dashed rgba(255, 255, 255, 0.28); background: var(--glass-soft);
-  overflow: hidden; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 16px 44px rgba(0, 0, 0, 0.45);
-  transition: border-color 0.3s ease, transform 0.3s var(--ease-out); }
-.slot:hover, .slot.is-hot { border-color: rgba(255, 100, 130, 0.7); transform: scale(1.02); }
-.slot.is-filled { border-style: solid; }
-.slot__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: rgba(0, 0, 0, 0.35); }
-.slot__hint { padding: 0 14px; font-size: 11.5px; line-height: 1.35; color: var(--ink-3); text-align: center; }
+.sheet__gif { display: block; width: 100%; aspect-ratio: 1.68 / 1; object-fit: cover;
+  border-radius: var(--r-md); border: 1px solid rgba(255, 255, 255, 0.14); background: rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 16px 44px rgba(0, 0, 0, 0.45); }
 
 /* resume */
 .stage--doc { max-width: 900px; margin-inline: auto; padding: 28px var(--s-3) 90px; transform-origin: 50% 30%; }

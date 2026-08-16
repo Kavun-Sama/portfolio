@@ -1,6 +1,5 @@
 import { $ } from "./dom";
 
-const GIF_KEY = "kk_comeback_gif";
 const AWAY_MS = 3000;
 const TITLES = [
   "Welcome back",
@@ -24,8 +23,6 @@ export function initComeback(): void {
   const clock = $("[data-comeback-clock]");
   const close = $("[data-comeback-close]");
   if (!sheet || !card) return;
-
-  initGifSlot();
 
   let awayAt: number | null = null;
   let shown = false;
@@ -84,57 +81,4 @@ export function initComeback(): void {
   window.addEventListener("blur", leave);
   window.addEventListener("focus", back);
   close?.addEventListener("click", dismiss);
-}
-
-function initGifSlot(): void {
-  const slot = $("[data-gif-slot]");
-  const img = $<HTMLImageElement>("[data-gif-img]");
-  const hint = $("[data-gif-hint]");
-  const input = $<HTMLInputElement>("[data-gif-input]");
-  if (!slot || !img || !input) return;
-
-  const paint = (url: string): void => {
-    img.src = url;
-    img.removeAttribute("hidden");
-    hint?.setAttribute("hidden", "");
-    slot.classList.add("is-filled");
-  };
-
-  // Read as a data URL rather than re-encoding through a canvas: canvas would
-  // freeze an animated GIF on its first frame.
-  const ingest = (file: File | undefined): void => {
-    if (!file || !file.type.startsWith("image/")) return;
-    if (file.size > 6 * 1024 * 1024) {
-      if (hint) hint.textContent = "Under 6 MB, please";
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      const url = String(reader.result);
-      paint(url);
-      try {
-        localStorage.setItem(GIF_KEY, url);
-      } catch {
-        if (hint) hint.textContent = "Too large to remember";
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  try {
-    const saved = localStorage.getItem(GIF_KEY);
-    if (saved) paint(saved);
-  } catch {
-    /* storage blocked — the slot just starts empty */
-  }
-
-  slot.addEventListener("click", () => input.click());
-  input.addEventListener("change", () => ingest(input.files?.[0]));
-  slot.addEventListener("dragover", (event) => { event.preventDefault(); slot.classList.add("is-hot"); });
-  slot.addEventListener("dragleave", () => slot.classList.remove("is-hot"));
-  slot.addEventListener("drop", (event) => {
-    event.preventDefault();
-    slot.classList.remove("is-hot");
-    ingest(event.dataTransfer?.files?.[0]);
-  });
 }
