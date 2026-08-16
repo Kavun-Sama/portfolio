@@ -19,7 +19,7 @@
 /* layout */
 .hero { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 28px; padding: 140px var(--s-3) 80px; text-align: center; }
-.hero__title { max-width: 15ch; font-size: clamp(52px, 8.6vw, 128px); line-height: 0.98;
+.hero__title { max-width: 20ch; font-size: clamp(46px, 7.4vw, 104px); line-height: 0.98;
   letter-spacing: -0.045em; font-weight: 600; }
 .hero__lead { max-width: 60ch; font-size: clamp(17px, 2vw, 21px); line-height: 1.55; color: var(--ink-2); }
 .grad { background: linear-gradient(120deg, var(--accent), #ff9f0a); -webkit-background-clip: text;
