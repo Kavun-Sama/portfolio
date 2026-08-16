@@ -16,6 +16,13 @@ const readOrigin = (): { x: number; y: number } | null => {
   }
 };
 
+const hideCurtain = (curtain: HTMLElement): void => {
+  curtain.setAttribute("hidden", "");
+  curtain.style.transition = "none";
+  curtain.style.opacity = "0";
+  curtain.style.clipPath = "";
+};
+
 export function initTransitions(): void {
   const curtain = $("[data-curtain]");
   const label = $("[data-curtain-label]");
@@ -23,6 +30,14 @@ export function initTransitions(): void {
   if (!curtain) return;
 
   playEnter(curtain, stage, readOrigin());
+
+  // Restoring from bfcache replays the DOM as it was mid-navigation, with the
+  // curtain fully expanded — clear it so the page is not left dimmed.
+  window.addEventListener("pageshow", (event) => {
+    if (!event.persisted) return;
+    hideCurtain(curtain);
+    stage?.classList.remove("stage--leaving", "stage--entering");
+  });
 
   document.addEventListener("click", (event) => {
     const link = (event.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
@@ -69,6 +84,10 @@ function playEnter(curtain: HTMLElement, stage: HTMLElement | null, origin: { x:
   const settle: Array<() => void> = [
     () => stage?.classList.remove("stage--entering")
   ];
+
+  if (!origin || prefersReducedMotion()) {
+    hideCurtain(curtain);
+  }
 
   if (origin && !prefersReducedMotion()) {
     const x = origin.x * window.innerWidth;
