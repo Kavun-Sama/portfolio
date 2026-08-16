@@ -21,7 +21,7 @@ Production output is minified and stripped of comments (`esbuild.legalComments: 
     src/data/projects.ts  the four projects + palette targets (single source of truth)
     src/lib/
       blooms.ts           pointer/scroll parallax for the background lights
-      comeback.ts         "welcome back" sheet, GIF slot, tab-title nagging
+      comeback.ts         "welcome back" sheet, tab-title nagging
       nav.ts              sliding pill that tracks the active section
       palette.ts          Cmd/Ctrl+K quick jump
       reveal.ts           scroll reveal (rect-based, survives throttled rAF)
