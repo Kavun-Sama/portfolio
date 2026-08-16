@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <title>kkkavun — tunnels, crawlers, static frontends</title>
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/components.css">
+  <script type="module" src="/src/main.ts"></script>
+</head>
+<body>
+  <div class="blooms" aria-hidden="true">
+    <span class="bloom bloom--pink" data-bloom="a"></span>
+    <span class="bloom bloom--indigo" data-bloom="b"></span>
+    <span class="bloom bloom--green" data-bloom="c"></span>
+  </div>
+  <div class="curtain" data-curtain><span class="curtain__label" data-curtain-label></span></div>
+
+  <div class="sheet" data-comeback hidden>
+    <div class="sheet__card" data-comeback-card>
+      <div class="slot" data-gif-slot title="Drop a GIF or click to choose">
+        <img class="slot__img" data-gif-img alt="" hidden>
+        <span class="slot__hint" data-gif-hint>Drop a GIF here</span>
+      </div>
+      <input type="file" accept="image/gif,image/png,image/jpeg,image/webp" data-gif-input hidden>
+      <h2 class="sheet__title" data-comeback-title>Welcome back</h2>
+      <p class="sheet__body">The tunnel held for <span data-comeback-clock>a moment</span>. <span data-comeback-quip>Nothing dropped.</span></p>
+      <button class="btn btn--primary btn--block" data-comeback-close>Continue</button>
+    </div>
+  </div>
+
+  <div class="palette" data-palette hidden>
+    <div class="palette__card" data-palette-card>
+      <div class="palette__field">
+        <span class="palette__glyph">⌘</span>
+        <input class="palette__input" data-palette-input placeholder="Jump to a section, repo or contact" aria-label="Quick jump">
+        <span class="kbd">esc</span>
+      </div>
+      <div class="palette__list" data-palette-list role="listbox"></div>
+    </div>
+  </div>
+
+  <nav class="nav" data-nav>
+    <span class="nav__pill" data-nav-pill aria-hidden="true"></span>
+    <a class="nav__item" data-nav-item="work" href="#work">Work</a>
+    <a class="nav__item" data-nav-item="stack" href="#stack">Stack</a>
+    <a class="nav__item" data-nav-item="contact" href="#contact">Contact</a>
+    <button class="nav__key" data-palette-open title="Quick jump">⌘K</button>
+  </nav>
+
+  <main class="stage" data-stage>
+    <section class="hero">
+      <p class="badge" data-reveal><span class="dot"></span>Open for work · Go, Python, Rust</p>
+      <h1 class="hero__title" data-reveal>Traffic that gets <span class="grad">through</span></h1>
+      <p class="hero__lead" data-reveal>I'm kkkavun. I build tunnels that look like video calls, crawlers that walk past Cloudflare, and static sites that ship almost no JavaScript.</p>
+      <div class="row row--center" data-reveal>
+        <a class="btn btn--light" href="#work">See the work</a>
+        <a class="btn btn--glass" href="https://t.me/kkkavun" target="_blank" rel="noopener">Message me</a>
+      </div>
+    </section>
+
+    <section id="work" class="section">
+      <header class="section__head" data-reveal>
+        <h2 class="section__title">Selected work</h2>
+        <p class="section__lead">Four tools built end to end — networking, crawling, audio tooling, and a static frontend at catalog scale.</p>
+      </header>
+      <div class="cards" data-project-grid></div>
+    </section>
+
+    <section id="stack" class="section">
+      <header class="section__head" data-reveal>
+        <h2 class="section__title">Point me at something weird</h2>
+        <p class="legend"><span class="dot dot--solid"></span>Daily driver <span class="dot dot--hollow"></span>Working knowledge</p>
+      </header>
+      <div class="cards cards--tight" data-stack-grid></div>
+      <p class="langs" data-reveal>Python · Rust · Go · JS / TS · <span class="muted">C#</span></p>
+    </section>
+
+    <section id="contact" class="section section--narrow">
+      <div class="panel" data-reveal>
+        <h2 class="section__title">Got something stubborn to build?</h2>
+        <p class="section__lead">Tunnels, scrapers, bots, reverse engineering, or a frontend that has to stay fast. Tell me what is in the way.</p>
+        <div class="list">
+          <a class="list__row" href="https://t.me/kkkavun" target="_blank" rel="noopener"><span>Telegram</span><span class="muted">@kkkavun ›</span></a>
+          <a class="list__row" href="https://github.com/Kavun-Sama" target="_blank" rel="noopener"><span>GitHub</span><span class="muted">Kavun-Sama ›</span></a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="section">
+      <div data-reveal>
+        <p class="step"><span class="step__num">4</span>Last step</p>
+        <a class="cta" href="/resume.html">
+          <span>
+            <span class="cta__title">Read the one-page résumé</span>
+            <span class="cta__sub">Stack in full, four shipped projects, and how I work.</span>
+          </span>
+          <span class="btn btn--primary">Open résumé ›</span>
+        </a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

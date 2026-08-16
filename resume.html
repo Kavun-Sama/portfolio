@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <title>kkkavun — résumé</title>
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/components.css">
+  <script type="module" src="/src/resume.ts"></script>
+</head>
+<body>
+  <div class="blooms" aria-hidden="true">
+    <span class="bloom bloom--pink" data-bloom="a"></span>
+    <span class="bloom bloom--indigo" data-bloom="b"></span>
+    <span class="bloom bloom--green" data-bloom="c"></span>
+  </div>
+  <div class="curtain" data-curtain><span class="curtain__label" data-curtain-label></span></div>
+
+  <div class="stage stage--doc" data-stage>
+    <div class="crumbs" data-stagger>
+      <a href="/index.html">‹ Portfolio</a>
+      <span class="chip">Résumé</span>
+    </div>
+
+    <header class="doc__head" data-stagger>
+      <h1 class="doc__title">kkkavun</h1>
+      <p class="doc__lead">Backend and tooling engineer. Networking, reverse engineering, automation, and frontends that stay small.</p>
+      <div class="row">
+        <a class="btn btn--primary" href="https://t.me/kkkavun" target="_blank" rel="noopener">Telegram ↗</a>
+        <a class="btn btn--glass" href="https://github.com/Kavun-Sama" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </header>
+
+    <section class="panel" data-stagger>
+      <div class="panel__head">
+        <h2 class="panel__title">Stack</h2>
+        <p class="legend"><span class="dot dot--solid"></span>Daily driver <span class="dot dot--hollow"></span>Working knowledge</p>
+      </div>
+      <div class="list list--stack" data-stack-list></div>
+      <p class="langs langs--small"><span class="muted">Languages</span> Python · Rust · Go · JS / TS · <span class="muted">C#</span></p>
+    </section>
+
+    <section class="panel" data-stagger>
+      <h2 class="panel__title">Selected work</h2>
+      <div class="entries" data-project-list></div>
+    </section>
+
+    <section class="panel" data-stagger>
+      <h2 class="panel__title">How I work</h2>
+      <ul class="notes">
+        <li>Documentation lives in the repository — every project ships a README someone can follow.</li>
+        <li>CI on every push, tagged releases with checksums, containers wherever a server is involved.</li>
+        <li>Measured claims only: throughput numbers, page counts and build times come from real runs.</li>
+        <li>Small surface: no configuration where a default can be inferred, no JavaScript where HTML is enough.</li>
+      </ul>
+    </section>
+
+    <footer class="doc__foot" data-stagger>
+      <span>Available for tooling, networking and reverse-engineering work</span>
+      <a href="https://t.me/kkkavun" target="_blank" rel="noopener">@kkkavun ↗</a>
+    </footer>
+  </div>
+</body>
+</html>
