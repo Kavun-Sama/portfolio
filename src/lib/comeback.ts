@@ -15,7 +15,12 @@ const QUIPS = [
 ];
 const NAGS = ["← come back", "the tunnel is still open", "kkkavun is waiting"];
 
-export function initComeback(): void {
+export type ComebackOptions = {
+  /** Runs just before the sheet appears, so the page can dismiss whatever it covers. */
+  onShow?: () => void;
+};
+
+export function initComeback({ onShow }: ComebackOptions = {}): void {
   const sheet = $("[data-comeback]");
   const card = $("[data-comeback-card]");
   const title = $("[data-comeback-title]");
@@ -36,6 +41,7 @@ export function initComeback(): void {
   const show = (): void => {
     if (shown || awayAt === null) return;
     shown = true;
+    onShow?.();
     returns += 1;
     const index = Math.min(returns - 1, TITLES.length - 1);
     if (title) title.textContent = TITLES[index]!;
