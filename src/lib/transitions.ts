@@ -19,6 +19,7 @@ const readOrigin = (): { x: number; y: number } | null => {
 };
 
 const hideCurtain = (curtain: HTMLElement): void => {
+  curtain.classList.remove("is-busy");
   curtain.setAttribute("hidden", "");
   curtain.style.transition = "none";
   curtain.style.opacity = "0";
@@ -75,8 +76,9 @@ export function initTransitions(): void {
     void curtain.offsetHeight;
 
     const play = (): void => {
-      curtain.style.transition = "clip-path .8s cubic-bezier(.66,0,.24,1)";
+      curtain.style.transition = "clip-path .8s var(--ease-sheet)";
       curtain.style.clipPath = `circle(${reach(x, y)}px at ${x}px ${y}px)`;
+      curtain.classList.add("is-busy");
       stage?.classList.add("stage--leaving");
     };
     requestAnimationFrame(() => requestAnimationFrame(play));
@@ -104,7 +106,7 @@ function playEnter(curtain: HTMLElement, stage: HTMLElement | null, origin: { x:
     curtain.style.clipPath = `circle(${reach(x, y)}px at ${x}px ${y}px)`;
     void curtain.offsetHeight;
     settle.push(() => {
-      curtain.style.transition = "clip-path .9s cubic-bezier(.66,0,.24,1), opacity .45s ease .5s";
+      curtain.style.transition = "clip-path .9s var(--ease-sheet), opacity .45s ease .5s";
       curtain.style.clipPath = `circle(0px at ${x}px ${y}px)`;
       curtain.style.opacity = "0";
     });
