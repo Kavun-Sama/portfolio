@@ -2,13 +2,18 @@ import { $, el, escapeHtml } from "./dom";
 
 export type Command = { label: string; hint: string; run: () => void };
 
-export function initPalette(commands: Command[]): void {
+/** Lets whoever composes the page dismiss the palette when another surface takes over. */
+export type Palette = { close: () => void };
+
+const noop: Palette = { close: () => {} };
+
+export function initPalette(commands: Command[]): Palette {
   const root = $("[data-palette]");
   const card = $("[data-palette-card]");
   const input = $<HTMLInputElement>("[data-palette-input]");
   const list = $("[data-palette-list]");
   const opener = $("[data-palette-open]");
-  if (!root || !card || !input || !list) return;
+  if (!root || !card || !input || !list) return noop;
 
   let open = false;
   let selected = 0;
@@ -89,4 +94,6 @@ export function initPalette(commands: Command[]): void {
       if (cmd) { close(); cmd.run(); }
     }
   });
+
+  return { close: () => { if (open) close(); } };
 }

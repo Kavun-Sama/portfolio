@@ -69,5 +69,5 @@ initTransitions();
 initBlooms();
 initReveal();
 initNav(["work", "stack", "contact"]);
-initPalette(commands());
-initComeback();
+const palette = initPalette(commands());
+initComeback({ onShow: palette.close });

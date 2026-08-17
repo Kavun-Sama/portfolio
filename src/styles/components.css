@@ -144,7 +144,10 @@
 .palette__empty { padding: 26px 16px; text-align: center; font-size: 14px; color: var(--ink-3); }
 
 /* comeback sheet */
-.sheet { position: fixed; inset: 0; z-index: 110; display: grid; place-items: center; padding: var(--s-3);
+/* Stack: blooms 0, stage 10, nav 90, palette 115, sheet 118, curtain 120.
+   The sheet interrupts, so it sits above the palette; both stay under the
+   curtain, which owns the page transition. */
+.sheet { position: fixed; inset: 0; z-index: 118; display: grid; place-items: center; padding: var(--s-3);
   background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(22px) saturate(160%);
   -webkit-backdrop-filter: blur(22px) saturate(160%); opacity: 0; transition: opacity 0.45s var(--ease-out); }
 .sheet[hidden] { display: none; }
