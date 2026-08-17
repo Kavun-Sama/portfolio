@@ -35,6 +35,17 @@ export function initComeback({ onShow }: ComebackOptions = {}): void {
   const close = $("[data-comeback-close]");
   if (!sheet || !card) return;
 
+  // The clips do not share an aspect ratio, so let each one size its own
+  // frame instead of leaving bars around it. Read from the file rather than
+  // hardcoding, so swapping a clip needs no code change.
+  if (clip) {
+    clip.addEventListener("loadedmetadata", () => {
+      if (clip.videoWidth && clip.videoHeight) {
+        clip.style.aspectRatio = `${clip.videoWidth} / ${clip.videoHeight}`;
+      }
+    });
+  }
+
   let awayAt: number | null = null;
   let shown = false;
   let returns = 0;
