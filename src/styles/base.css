@@ -55,6 +55,9 @@ b { font-weight: 500; color: #fff; }
   background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(28px) saturate(160%);
   -webkit-backdrop-filter: blur(28px) saturate(160%); pointer-events: none; }
 .curtain[hidden] { display: none; }
+/* Set by an inline guard in <head> when no transition is pending, so a plain
+   load never paints the curtain before the module script runs. */
+.kk-no-curtain .curtain { display: none; }
 .curtain__label { font-size: 15px; color: rgba(235, 235, 245, 0.75); }
 
 .will-reveal { opacity: 0; transform: translateY(28px) scale(0.985);

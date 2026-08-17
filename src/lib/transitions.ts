@@ -1,6 +1,8 @@
 import { $, prefersReducedMotion } from "./dom";
 
+// Mirrored by the inline pre-paint guard in index.html and resume.html.
 const KEY = "kk_tx";
+const NO_CURTAIN = "kk-no-curtain";
 const OUT_MS = 780;
 
 const reach = (x: number, y: number): number =>
@@ -30,6 +32,10 @@ export function initTransitions(): void {
   if (!curtain) return;
 
   playEnter(curtain, stage, readOrigin());
+
+  // playEnter has settled the curtain state, so the pre-paint guard can go:
+  // from here on visibility is driven by the hidden attribute alone.
+  document.documentElement.classList.remove(NO_CURTAIN);
 
   // Restoring from bfcache replays the DOM as it was mid-navigation, with the
   // curtain fully expanded — clear it so the page is not left dimmed.
