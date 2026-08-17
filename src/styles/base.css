@@ -63,24 +63,28 @@ b { font-weight: 500; color: #fff; }
    load never paints the curtain before the module script runs. */
 .kk-no-curtain .curtain { display: none; }
 /* Content lags the curtain so the surface reads as arriving first. */
-.curtain__inner { display: grid; justify-items: center; gap: 20px;
+.curtain__inner { display: grid; justify-items: center;
   opacity: 0; transform: translateY(6px) scale(0.98); filter: blur(4px);
   transition: opacity 0.44s var(--ease-out) 0.14s,
     transform 0.56s var(--ease-spring) 0.14s,
     filter 0.44s var(--ease-out) 0.14s; }
 .curtain.is-busy .curtain__inner { opacity: 1; transform: none; filter: none; }
 
-.curtain__label { font-size: 21px; font-weight: 500; letter-spacing: -0.022em; color: var(--ink); }
+/* The destination name carries the wait on its own: a light band sweeps
+   through the letters instead of a separate progress element. */
+.curtain__label { font-size: clamp(26px, 4vw, 34px); font-weight: 500; letter-spacing: -0.024em;
+  color: rgba(235, 235, 245, 0.42);
+  background-image: linear-gradient(90deg,
+    rgba(235, 235, 245, 0.42) 40%, var(--ink) 50%, rgba(235, 235, 245, 0.42) 60%);
+  background-size: 220% 100%; background-repeat: no-repeat;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; }
+.curtain.is-busy .curtain__label { animation: label-sweep 1.9s linear infinite; }
 
-/* Fills in exactly the time the navigation takes, so the wait is stated
-   rather than mimed by an indeterminate spinner. */
-.curtain__rail { position: relative; width: 132px; height: 2px; overflow: hidden;
-  border-radius: var(--r-pill); background: rgba(255, 255, 255, 0.16); }
-.curtain__rail::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
-  background: linear-gradient(120deg, var(--accent), #ff9f0a);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.68s var(--ease-out) 0.1s; }
-.curtain.is-busy .curtain__rail::after { transform: scaleX(1); }
+@keyframes label-sweep {
+  from { background-position: 110% 0; }
+  to { background-position: -110% 0; }
+}
 
 .will-reveal { opacity: 0; transform: translateY(28px) scale(0.985);
   transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
@@ -92,4 +96,7 @@ b { font-weight: 500; color: #fff; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .will-reveal, .will-stagger { opacity: 1; transform: none; }
+  /* Without the sweep the clipped gradient would leave the name half dim. */
+  .curtain__label { background-image: none; -webkit-text-fill-color: var(--ink); color: var(--ink); }
+  .curtain__inner { opacity: 1; transform: none; filter: none; }
 }
