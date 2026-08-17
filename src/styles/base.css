@@ -43,13 +43,17 @@ b { font-weight: 500; color: #fff; }
 .bloom--green { bottom: 4%; left: 30%; width: 38vw; height: 38vw; filter: blur(70px);
   background: radial-gradient(circle, rgba(48, 209, 88, 0.26), rgba(48, 209, 88, 0) 66%); }
 
-.stage { position: relative; z-index: 10; transform-origin: 50% 40%; will-change: transform, opacity, filter; }
-.stage--entering { opacity: 0; filter: blur(8px); transform: scale(1.02) translateY(8px);
+/* The resting state lives on .stage itself. It used to sit on
+   .stage:not(.stage--entering), whose :not() argument pushed it to a higher
+   specificity than .stage--leaving and silently cancelled the leaving
+   transform. State classes must not be out-weighed by the resting rule. */
+.stage { position: relative; z-index: 10; transform-origin: 50% 40%;
+  will-change: transform, opacity, filter;
+  opacity: 1; filter: none; transform: none;
   transition: transform 1.05s var(--ease-out), opacity 0.8s ease, filter 0.8s ease; }
-.stage:not(.stage--entering) { opacity: 1; filter: none; transform: none;
-  transition: transform 1.05s var(--ease-out), opacity 0.8s ease, filter 0.8s ease; }
-.stage--leaving { opacity: 0.25; filter: blur(5px); transform: scale(0.97);
-  transition: transform 0.8s cubic-bezier(0.32, 0.9, 0.26, 1), opacity 0.6s ease, filter 0.6s ease; }
+.stage--entering { opacity: 0; filter: blur(8px); transform: scale(1.02) translateY(8px); }
+.stage--leaving { opacity: 0.25; filter: blur(5px); transform: scale(0.965);
+  transition: transform 0.8s var(--ease-sheet), opacity 0.6s ease, filter 0.6s ease; }
 
 .curtain { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center;
   background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(28px) saturate(160%);
