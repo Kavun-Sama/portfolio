@@ -47,17 +47,22 @@
 .legend .dot { margin-left: 12px; }
 .legend .dot:first-child { margin-left: 0; }
 
+/* Lift and press are defined once here; variants only carry colour, so every
+   button reacts the same way. */
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 26px; border: 0;
   border-radius: var(--r-pill); font: inherit; font-size: 16px; font-weight: 500; cursor: pointer;
-  transition: transform 0.18s ease, background 0.18s ease; }
+  transition: transform 0.26s var(--ease-spring), background 0.18s ease, box-shadow 0.26s var(--ease-out); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(0.985); transition-duration: 0.09s; }
 .btn--primary { background: var(--accent); color: #fff; }
-.btn--primary:hover { background: var(--accent-hover); color: #fff; }
-.btn--primary:active { background: var(--accent-active); transform: scale(0.98); }
+.btn--primary:hover { background: var(--accent-hover); color: #fff; box-shadow: 0 12px 30px rgba(255, 55, 95, 0.34); }
+.btn--primary:active { background: var(--accent-active); box-shadow: 0 4px 14px rgba(255, 55, 95, 0.28); }
 .btn--light { background: var(--ink); color: #000; }
-.btn--light:hover { background: #fff; color: #000; transform: translateY(-1px); }
+.btn--light:hover { background: #fff; color: #000; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45); }
 .btn--glass { border: 1px solid rgba(255, 255, 255, 0.16); background: var(--glass-soft);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); color: var(--ink); }
-.btn--glass:hover { background: rgba(255, 255, 255, 0.12); color: var(--ink); }
+.btn--glass:hover { background: rgba(255, 255, 255, 0.12); color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.26); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38); }
 .btn--block { width: 100%; justify-content: center; margin-top: var(--s-3); }
 
 .panel { padding: clamp(26px, 4vw, 52px); border-radius: var(--r-xl); border: 1px solid rgba(255, 255, 255, 0.11);
