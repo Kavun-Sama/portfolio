@@ -1,5 +1,10 @@
 import { $ } from "./dom";
+import gifFirst from "../../gif_1.gif";
+import gifSecond from "../../gif_2.gif";
+import gifThird from "../../gif_3.gif";
 
+// Indexed by return count; the last one repeats from the third return on.
+const GIFS = [gifFirst, gifSecond, gifThird];
 const AWAY_MS = 3000;
 const TITLES = [
   "Welcome back",
@@ -26,6 +31,7 @@ export function initComeback({ onShow }: ComebackOptions = {}): void {
   const title = $("[data-comeback-title]");
   const quip = $("[data-comeback-quip]");
   const clock = $("[data-comeback-clock]");
+  const gif = $<HTMLImageElement>("[data-comeback-gif]");
   const close = $("[data-comeback-close]");
   if (!sheet || !card) return;
 
@@ -46,6 +52,8 @@ export function initComeback({ onShow }: ComebackOptions = {}): void {
     const index = Math.min(returns - 1, TITLES.length - 1);
     if (title) title.textContent = TITLES[index]!;
     if (quip) quip.textContent = QUIPS[index]!;
+    const art = GIFS[Math.min(returns - 1, GIFS.length - 1)];
+    if (gif && art) gif.src = art;
     if (clock) clock.textContent = humanize(Math.max(2, Math.round((Date.now() - awayAt) / 1000)));
     sheet.removeAttribute("hidden");
     requestAnimationFrame(() => sheet.classList.add("is-open"));
