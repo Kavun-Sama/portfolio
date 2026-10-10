@@ -10,6 +10,11 @@ html {
   background: var(--bg0);
   scroll-behavior: smooth;
   scroll-padding-block: var(--s7);
+  scrollbar-gutter: stable;
+}
+
+html:has(dialog[open]) {
+  overflow: hidden;
 }
 
 body {
