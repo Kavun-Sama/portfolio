@@ -95,6 +95,7 @@
 .entry__name {
   display: inline-flex;
   align-items: center;
+  gap: 0.25em;
   min-height: 2.75rem;
   font-size: var(--fs-lead);
   font-weight: 700;
@@ -195,7 +196,11 @@
     border-radius: 0;
     background: none;
     box-shadow: none;
-    break-inside: avoid;
+  }
+
+  .doc-section__head {
+    margin-bottom: 2mm;
+    break-after: avoid;
   }
 
   .doc-section__title {
@@ -209,7 +214,7 @@
   .row,
   .entry {
     break-inside: avoid;
-    padding-block: 3mm;
+    padding-block: 2mm;
   }
 
   .notes__item {
@@ -222,8 +227,13 @@
   }
 
   .doc-foot {
-    margin-top: 8mm;
+    margin-top: 5mm;
     padding: 0;
+  }
+
+  .entry__name > [aria-hidden="true"],
+  .doc-foot a > [aria-hidden="true"] {
+    display: none;
   }
 
   .entry__name::after,
