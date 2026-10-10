@@ -1,5 +1,3 @@
-import { setTheme, type ThemeMode } from "./theme";
-
 const PANEL_WIDTH = 640;
 
 /** Case- and accent-insensitive, so "resume" finds "Résumé". */
@@ -91,8 +89,6 @@ export function initPanel(): void {
       dialog.close();
       return;
     }
-    const theme = target.closest<HTMLElement>("[data-theme-set]");
-    if (theme) setTheme(theme.dataset.themeSet as ThemeMode);
     if (target.closest(".panel__row")) dialog.close();
   });
 }

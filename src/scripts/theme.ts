@@ -44,7 +44,7 @@ function paint(mode: ThemeMode): void {
   });
 }
 
-export function setTheme(mode: ThemeMode): void {
+function setTheme(mode: ThemeMode): void {
   persist(mode);
   paint(mode);
 }
