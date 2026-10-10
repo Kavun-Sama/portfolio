@@ -55,7 +55,7 @@ export const renderPalette = (page: Page): string => `<dialog class="panel" data
     <h2 class="sr-only" id="panel-title">Jump</h2>
     <div class="panel__field">
       ${icon("search")}
-      <input class="panel__input" type="search" data-panel-input placeholder="Jump to a section, repo or contact" aria-label="Jump to a section, repo or contact" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go">
+      <input class="panel__input" type="search" data-panel-input placeholder="Section, repo or contact" aria-label="Jump to a section, repo or contact" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go">
       <button class="panel__close" type="button" data-panel-close>Close</button>
     </div>
     <ul class="panel__list" data-panel-list>

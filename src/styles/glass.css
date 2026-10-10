@@ -342,6 +342,7 @@ html:has(.panel[open]) .dock {
 .panel__surface {
   --r-panel: 28px;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: var(--s2);
   max-height: min(72dvh, 36rem);
@@ -358,6 +359,16 @@ html:has(.panel[open]) .dock {
   border-radius: calc(var(--r-panel) - var(--inset));
   background: var(--glass-rest);
   color: var(--glass-ink2);
+}
+
+@media (max-width: 29.99rem) {
+  .panel__field > .ico {
+    display: none;
+  }
+
+  .panel__field {
+    padding-left: var(--s4);
+  }
 }
 
 .panel__input {
