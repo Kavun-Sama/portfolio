@@ -154,7 +154,4 @@ export const links = {
   live: "https://try.kkkavun.pw"
 };
 
-export const factText = (fact: Fact): string =>
-  [fact.value, fact.unit, fact.label].filter(Boolean).join(" ");
-
 export const metaText = (project: Project): string => `${project.stack} · ${project.license}`;
