@@ -74,7 +74,7 @@ export function renderDock(page: Page): string {
   <ul class="dock__list">
     ${sections[page].map(link).join("\n    ")}
     ${link(message)}
-    <li class="dock__sep" role="presentation"></li>
+    <li class="dock__sep" aria-hidden="true"></li>
     ${pageLink[page].map(link).join("\n    ")}
     ${jump}
     ${dark}
