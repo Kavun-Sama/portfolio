@@ -31,7 +31,7 @@ const plate = (project: Project): string => {
 export const renderWork = (): string => `<section class="section" id="work" aria-labelledby="work-title">
   <header class="section__head">
     <h2 class="section__title" id="work-title">Selected work</h2>
-    <p class="section__lead">Four tools built end to end — networking, crawling, audio tooling, and a static frontend at catalog scale.</p>
+    <p class="section__lead">Six tools built end to end — networking, crawling, audio tooling, neural arithmetic, and a static frontend at catalog scale.</p>
   </header>
   <ol class="plates">
     ${projects.map(plate).join("\n    ")}

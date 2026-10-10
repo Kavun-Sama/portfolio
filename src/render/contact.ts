@@ -6,7 +6,7 @@ type Row = { label: string; value: string; href: string; external: boolean };
 const rows: Row[] = [
   { label: "Telegram", value: "@kkkavun", href: links.telegram, external: true },
   { label: "GitHub", value: "Kavun-Sama", href: links.github, external: true },
-  { label: "Résumé", value: "Stack in full, four shipped projects, and how I work.", href: "/resume.html", external: false }
+  { label: "Résumé", value: "Stack in full, six shipped projects, and how I work.", href: "/resume.html", external: false }
 ];
 
 const row = ({ label, value, href, external }: Row): string => {
