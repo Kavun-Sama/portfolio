@@ -168,3 +168,110 @@
     animation-name: kk-dock-bar;
   }
 }
+
+/* ---------- Depth on scroll ---------- */
+@keyframes kk-recede {
+  to {
+    opacity: 0.1;
+    filter: blur(12px);
+    scale: 0.92;
+    translate: 0 -5vh;
+  }
+}
+
+/* A sheet rising from below: tilted back, small and out of focus, it flattens and comes to the front as it lands. */
+@keyframes kk-sheet-in {
+  from {
+    filter: blur(6px);
+    transform: perspective(1400px) translateY(9vh) rotateX(9deg) scale(0.94);
+  }
+}
+
+/* On the way out it sinks slightly, so the sheets that follow read as nearer. */
+@keyframes kk-sheet-out {
+  to {
+    scale: 0.95;
+    translate: 0 -3vh;
+  }
+}
+
+/* The figure inside a spec well drifts against the plate: a second layer. */
+@keyframes kk-drift {
+  from {
+    translate: 0 0.4rem;
+  }
+
+  to {
+    translate: 0 -0.4rem;
+  }
+}
+
+/* Focus pull: nearer than the page and out of focus, then sharp and in place.
+   Opacity stays at 1 on purpose: parts below the fold keep their real colours, so contrast tools read the rested state. */
+@keyframes kk-rise {
+  from {
+    filter: blur(10px);
+    translate: 0 1.75rem;
+    scale: 1.035;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero > * {
+      transform-origin: 0 100%;
+      animation: kk-recede ease-in both;
+      animation-timeline: scroll(root block);
+      animation-range: 0px 60vh;
+    }
+
+    html:not([data-arrival]) .hero > * {
+      animation:
+        kk-focus 1200ms var(--ease-sheet) calc(var(--n, 0) * 110ms + 160ms) backwards,
+        kk-recede ease-in both;
+      animation-timeline: auto, scroll(root block);
+      animation-range: normal, 0px 60vh;
+    }
+
+    .plate {
+      transform-origin: 50% 100%;
+      animation: kk-sheet-in linear both, kk-sheet-out linear both;
+      animation-timeline: view(), view();
+      animation-range: cover 0px cover 520px, exit 0% exit 100%;
+    }
+
+    .plate .spec__value {
+      animation: kk-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    :is(.section__head, .doc-section__head, .doc-head) > *,
+    .row,
+    .langs,
+    .notes__item,
+    .contact > li,
+    .entry {
+      animation: kk-rise linear both;
+      animation-timeline: view();
+      animation-range: cover 0px cover 280px;
+    }
+  }
+}
+
+/* Same parts, no scroll-driven animations (see depth.ts): once, on a timer, when they first reach the screen. */
+@supports not (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .kk-pre {
+      filter: blur(8px);
+      transform: perspective(1200px) translateY(2.5rem) rotateX(6deg) scale(0.97);
+      transform-origin: 50% 100%;
+    }
+
+    .kk-in {
+      transition:
+        filter 700ms var(--ease-sheet),
+        transform 900ms var(--ease-spring);
+    }
+  }
+}
