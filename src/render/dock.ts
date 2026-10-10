@@ -70,6 +70,7 @@ export function renderDock(page: Page): string {
       : `<a class="dock__brand" href="/" aria-label="kkkavun, portfolio home">kkkavun</a>`;
 
   return `<nav class="dock glass" aria-label="Primary" data-dock>
+  <span class="dock__pill" data-pill aria-hidden="true"></span>
   ${brand}
   <ul class="dock__list">
     ${sections[page].map(link).join("\n    ")}

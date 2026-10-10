@@ -39,6 +39,7 @@
   --glass-rest: light-dark(oklch(0 0 0 / 0.06), oklch(1 0 0 / 0.08));
   --glass-hover: light-dark(oklch(0 0 0 / 0.1), oklch(1 0 0 / 0.14));
   --glass-active: light-dark(oklch(0 0 0 / 0.16), oklch(1 0 0 / 0.22));
+  --pill-ring: light-dark(oklch(0 0 0 / 0.05), oklch(1 0 0 / 0.07));
   --glass-spec: light-dark(oklch(1 0 0 / 0.95), oklch(1 0 0 / 0.34));
   --glass-spec-dim: light-dark(oklch(1 0 0 / 0.3), oklch(1 0 0 / 0.06));
   --glass-ring: light-dark(oklch(0 0 0 / 0.1), oklch(1 0 0 / 0.1));
@@ -89,8 +90,11 @@
   --dur-press: 120ms;
   --dur-state: 240ms;
   --dur-morph: 420ms;
+  --dur-sheet: 820ms;
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+  /* Damped spring (about 8 % overshoot), sampled once; the glass pill and the entrance use it. */
+  --ease-spring: linear(0, 0.033, 0.116, 0.231, 0.361, 0.493, 0.619, 0.733, 0.831, 0.911, 0.974, 1.021, 1.053, 1.072, 1.082, 1.083, 1.079, 1.072, 1.062, 1.051, 1.04, 1.029, 1.02, 1.012, 1.006, 1.001, 0.998, 0.995, 1);
 }
 
 :root[data-theme="light"] {
@@ -107,5 +111,6 @@
     --ink3: var(--ink2);
     --line: light-dark(oklch(0 0 0 / 0.45), oklch(1 0 0 / 0.5));
     --line-strong: light-dark(oklch(0 0 0 / 0.7), oklch(1 0 0 / 0.8));
+    --pill-ring: var(--line-strong);
   }
 }
