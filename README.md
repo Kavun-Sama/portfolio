@@ -13,7 +13,7 @@ Personal portfolio. Three static pages (portfolio, résumé, 404), no framework:
 ## Layout
 
     index.html, resume.html, 404.html   shells: head, meta, and `<!-- @render name -->` markers
-    src/data/projects.ts                the four projects, stack, notes and links (single source of truth)
+    src/data/projects.ts                the six projects, stack, notes and links (single source of truth)
     src/render/                         pure functions that return HTML; expanded at build time by vite.config.ts
     src/scripts/
       app.ts                            entry shared by all pages, also imports the stylesheets
