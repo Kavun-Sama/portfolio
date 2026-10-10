@@ -93,3 +93,78 @@
     animation-duration: 0.01ms;
   }
 }
+
+/* ---------- Entrance: first load only. Arriving through a view transition skips it (data-arrival). ---------- */
+@keyframes kk-focus {
+  from {
+    opacity: 0;
+    filter: blur(14px);
+    scale: 1.06;
+  }
+}
+
+@keyframes kk-dock-rail {
+  from {
+    opacity: 0;
+    transform: translateX(-1.75rem) scale(0.92);
+  }
+}
+
+@keyframes kk-dock-bar {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem) scale(0.94);
+  }
+}
+
+@keyframes kk-item {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+}
+
+@keyframes kk-pill {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-arrival]) .dock {
+    animation: kk-dock-rail 900ms var(--ease-spring) 60ms backwards;
+  }
+
+  html:not([data-arrival]) :is(.dock__brand, .dock__list > li) {
+    animation: kk-item 700ms var(--ease-spring) calc(var(--i, 0) * 45ms + 240ms) backwards;
+  }
+
+  html:not([data-arrival]) .dock__pill {
+    animation: kk-pill 800ms var(--ease-spring) 560ms backwards;
+  }
+
+  html:not([data-arrival]) .hero > * {
+    transform-origin: 0 100%;
+    animation: kk-focus 1200ms var(--ease-sheet) calc(var(--n, 0) * 110ms + 160ms) backwards;
+  }
+
+  .dock__list > :nth-child(1) { --i: 1; }
+  .dock__list > :nth-child(2) { --i: 2; }
+  .dock__list > :nth-child(3) { --i: 3; }
+  .dock__list > :nth-child(4) { --i: 4; }
+  .dock__list > :nth-child(5) { --i: 5; }
+  .dock__list > :nth-child(6) { --i: 6; }
+  .dock__list > :nth-child(7) { --i: 7; }
+  .dock__list > :nth-child(8) { --i: 8; }
+  .dock__list > :nth-child(9) { --i: 9; }
+  .hero > :nth-child(2) { --n: 1; }
+  .hero > :nth-child(3) { --n: 2; }
+  .hero > :nth-child(4) { --n: 3; }
+}
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 68.74rem) {
+  html:not([data-arrival]) .dock {
+    animation-name: kk-dock-bar;
+  }
+}
