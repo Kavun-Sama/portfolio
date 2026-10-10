@@ -1,0 +1,164 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--bg0);
+  scroll-behavior: smooth;
+  scroll-padding-block: var(--s7);
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  background: var(--bg0);
+  color: var(--ink1);
+  font: 400 var(--fs-body) / 1.5 var(--font);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+fieldset,
+legend {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+fieldset {
+  min-width: 0;
+  border: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+svg {
+  display: block;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+::selection {
+  background: var(--ink1);
+  color: var(--bg0);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink1);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip {
+  position: fixed;
+  z-index: 100;
+  top: var(--s3);
+  left: var(--s3);
+  padding: var(--s3) var(--s5);
+  border-radius: var(--r-capsule);
+  background: var(--fill);
+  color: var(--on-fill);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip:focus-visible {
+  transform: none;
+}
+
+/* Controls in the content layer are opaque. Glass lives in glass.css only. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s2);
+  min-height: 3rem;
+  padding: 0 var(--s5);
+  border-radius: var(--r-capsule);
+  background: var(--fill);
+  color: var(--on-fill);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--dur-press) var(--ease-out), opacity var(--dur-state) var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color var(--dur-state) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    opacity: 0.86;
+  }
+
+  .link:hover {
+    text-decoration-color: currentcolor;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .btn:active {
+    transform: none;
+  }
+}
