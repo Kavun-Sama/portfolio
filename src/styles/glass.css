@@ -11,7 +11,7 @@
   background: var(--glass-tint);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-spec-dim), inset 0 -1px 0 var(--glass-rim);
+  box-shadow: 0 0 0 1px var(--glass-ring), var(--glass-shadow), inset 0 1px 0 var(--glass-spec-dim), inset 0 -1px 0 var(--glass-rim);
 }
 
 /* Specular rim: a 1 px gradient stroke, bright at the lit corner and the opposite edge. */
@@ -57,8 +57,7 @@
 
 /* Refraction (Chromium only, set by script): the backdrop is displaced at the rim as well as blurred. */
 .glass--refract {
-  -webkit-backdrop-filter: url("#kk-refract") blur(calc(var(--glass-blur) * 0.6)) saturate(var(--glass-saturate));
-  backdrop-filter: url("#kk-refract") blur(calc(var(--glass-blur) * 0.6)) saturate(var(--glass-saturate));
+  backdrop-filter: var(--refract) blur(calc(var(--glass-blur) * 0.6)) saturate(var(--glass-saturate));
 }
 
 /* Fallback 1: no backdrop-filter support. */

@@ -41,6 +41,7 @@
   --glass-active: light-dark(oklch(0 0 0 / 0.16), oklch(1 0 0 / 0.22));
   --glass-spec: light-dark(oklch(1 0 0 / 0.95), oklch(1 0 0 / 0.34));
   --glass-spec-dim: light-dark(oklch(1 0 0 / 0.3), oklch(1 0 0 / 0.06));
+  --glass-ring: light-dark(oklch(0 0 0 / 0.1), oklch(1 0 0 / 0.1));
   --glass-rim: light-dark(oklch(0 0 0 / 0.12), oklch(0 0 0 / 0.5));
   --shadow-lg: light-dark(oklch(0 0 0 / 0.22), oklch(0 0 0 / 0.5));
   --shadow-sm: light-dark(oklch(0 0 0 / 0.08), oklch(0 0 0 / 0.3));
