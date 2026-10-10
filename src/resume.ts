@@ -1,5 +1,5 @@
 import { $, el, escapeHtml } from "./lib/dom";
-import { projects, skills } from "./data/projects";
+import { metaText, projects, skills } from "./data/projects";
 import { initBlooms } from "./lib/blooms";
 import { initTransitions } from "./lib/transitions";
 
@@ -21,7 +21,7 @@ function renderProjects(): void {
   for (const project of projects) {
     list.append(
       el("article", "entry", `
-        <p class="entry__head"><a href="${project.url}" target="_blank" rel="noopener">${escapeHtml(project.name)} ↗</a><span class="muted">${escapeHtml(project.meta)}</span></p>
+        <p class="entry__head"><a href="${project.url}" target="_blank" rel="noopener">${escapeHtml(project.name)} ↗</a><span class="muted">${escapeHtml(metaText(project))}</span></p>
         <p class="entry__body">${escapeHtml(project.resume)}</p>`)
     );
   }

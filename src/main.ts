@@ -1,5 +1,5 @@
 import { $, el, escapeHtml } from "./lib/dom";
-import { links, projects, skills } from "./data/projects";
+import { factText, links, metaText, projects, skills } from "./data/projects";
 import { initBlooms } from "./lib/blooms";
 import { initComeback } from "./lib/comeback";
 import { initNav } from "./lib/nav";
@@ -15,9 +15,9 @@ function renderProjects(): void {
       "{hl}",
       `<b>${escapeHtml(project.highlight)}</b>`
     );
-    const facts = project.facts.map((fact) => `<span class="tag">${escapeHtml(fact)}</span>`).join("");
+    const facts = project.facts.map((fact) => `<span class="tag">${escapeHtml(factText(fact))}</span>`).join("");
     const card = el("a", "card", `
-      <p class="card__meta"><span class="badge badge--accent">${project.n} · ${escapeHtml(project.name)}</span><span class="muted">${escapeHtml(project.meta)}</span></p>
+      <p class="card__meta"><span class="badge badge--accent">${project.n} · ${escapeHtml(project.name)}</span><span class="muted">${escapeHtml(metaText(project))}</span></p>
       <h3 class="card__title">${escapeHtml(project.title)}</h3>
       <p class="card__lead">${lead}</p>
       <div class="tags">${facts}</div>
@@ -54,7 +54,7 @@ function commands(): Command[] {
     { label: "Résumé", hint: "page", run: () => $<HTMLAnchorElement>(".cta")?.click() },
     ...projects.map((project) => ({
       label: project.name,
-      hint: `repo · ${project.meta.split(" · ")[0]}`,
+      hint: `repo · ${project.stack}`,
       run: open(project.url)
     })),
     { label: "Telegram", hint: "@kkkavun", run: open(links.telegram) },
