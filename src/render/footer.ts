@@ -7,7 +7,7 @@ const options = [
 export const FOOTER_NOTE = "Available for tooling, networking and reverse-engineering work";
 
 const theme = `<fieldset class="seg" data-theme-group>
-    <legend class="seg__legend">Theme</legend>
+    <legend class="sr-only">Theme</legend>
     ${options
       .map(
         (o) =>

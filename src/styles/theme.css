@@ -17,6 +17,9 @@
   --ink2: light-dark(oklch(0.4 0 0), oklch(0.8 0 0));
   --ink3: light-dark(oklch(0.5 0 0), oklch(0.67 0 0));
 
+  /* Ambient light behind the hero: gives the control layer something to blur */
+  --ambient: light-dark(oklch(1 0 0 / 0.95), oklch(0.34 0 0 / 0.55));
+
   /* Strokes */
   --line: light-dark(oklch(0 0 0 / 0.1), oklch(1 0 0 / 0.1));
   --line-strong: light-dark(oklch(0 0 0 / 0.22), oklch(1 0 0 / 0.22));

@@ -1,0 +1,557 @@
+/*
+ * Content layer. Opaque tonal plates; type does the work.
+ * Horizontal grid: --lead is the left start of text. On wide screens it clears the glass rail,
+ * but plate surfaces still run to the viewport edge so the rail floats over them.
+ */
+:root {
+  --lead: var(--pad);
+  --col: calc(var(--measure) + var(--lead) + var(--pad));
+}
+
+@media (min-width: 68.75rem) {
+  :root {
+    --lead: calc(var(--rail-gap) + var(--rail-w) + var(--s5) - var(--edge));
+  }
+}
+
+.page {
+  padding: 0 var(--edge) 8rem;
+}
+
+@media (min-width: 68.75rem) {
+  .page {
+    padding-bottom: var(--section-gap);
+  }
+}
+
+.hero,
+.section__head,
+.rows,
+.langs,
+.notes,
+.contact,
+.foot {
+  max-width: var(--col);
+  padding-right: var(--pad);
+  padding-left: var(--lead);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: min(90dvh, 60rem);
+  padding-top: 7rem;
+  padding-bottom: var(--s8);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 calc(var(--edge) * -1);
+  background: radial-gradient(64rem 38rem at 12% 30%, var(--ambient), transparent 70%);
+  pointer-events: none;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s3);
+  color: var(--ink2);
+  font-size: var(--fs-sub);
+  font-weight: 600;
+}
+
+.status__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--ink1);
+}
+
+.hero__title {
+  margin-top: var(--s5);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.hero__lead {
+  max-width: 36em;
+  margin-top: var(--s6);
+  color: var(--ink2);
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2) var(--s5);
+  margin-top: var(--s6);
+}
+
+/* ---------- Sections ---------- */
+.section {
+  margin-top: var(--section-gap);
+}
+
+.section__head {
+  display: grid;
+  gap: var(--s3);
+  margin-bottom: var(--s7);
+}
+
+.section__title {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.section__lead {
+  max-width: 40em;
+  color: var(--ink2);
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+}
+
+/* ---------- Work plates ---------- */
+.plates {
+  display: grid;
+  gap: var(--edge);
+}
+
+.plate {
+  display: grid;
+  padding: var(--inset);
+  border-radius: var(--r-plate);
+  background: var(--bg1);
+  box-shadow: var(--plate-shadow);
+  scroll-margin-top: var(--s7);
+}
+
+.plate__meta,
+.plate__title,
+.plate__lead,
+.plate__links {
+  padding-right: calc(var(--pad) - var(--inset));
+  padding-left: calc(var(--lead) - var(--inset));
+}
+
+.plate__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s4);
+  padding-top: calc(var(--pad) - var(--inset));
+  color: var(--ink2);
+  font-size: var(--fs-sub);
+  font-weight: 600;
+}
+
+.plate__n {
+  color: var(--ink3);
+  font-variant-numeric: tabular-nums;
+}
+
+.plate__tech {
+  color: var(--ink3);
+}
+
+.plate__title {
+  margin-top: var(--s4);
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.plate__lead {
+  max-width: 38em;
+  margin-top: var(--s4);
+  color: var(--ink2);
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.plate__hl {
+  color: var(--ink1);
+  font-weight: 600;
+}
+
+.plate__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s5);
+  margin-top: var(--s4);
+  padding-bottom: calc(var(--pad) - var(--inset));
+}
+
+/* Spec well: the measured results. Radius = plate radius - inset (concentric). */
+.specs {
+  display: grid;
+  margin-top: var(--s5);
+  border-radius: var(--r-well);
+  background: var(--bg2);
+  overflow: hidden;
+}
+
+.spec {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--s1);
+  padding: var(--s4) var(--s5);
+}
+
+.spec + .spec {
+  border-top: 1px solid var(--line);
+}
+
+.spec__label {
+  color: var(--ink2);
+  font-size: var(--fs-label);
+  font-weight: 600;
+}
+
+.spec__value {
+  overflow-wrap: anywhere;
+}
+
+.spec__figure {
+  font-size: var(--fs-figure);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.spec--word .spec__figure {
+  font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.spec__unit {
+  color: var(--ink2);
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+/* Three across, then a column beside the text on wide plates */
+@media (min-width: 40rem) {
+  .specs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .spec + .spec {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+}
+
+@media (min-width: 56rem) {
+  .plate {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
+    grid-template-areas:
+      "meta specs"
+      "title specs"
+      "lead specs"
+      "links specs";
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: var(--s6);
+  }
+
+  .plate__meta { grid-area: meta; }
+  .plate__title { grid-area: title; }
+  .plate__lead { grid-area: lead; }
+  .plate__links { grid-area: links; align-self: end; }
+
+  .specs {
+    grid-area: specs;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    margin-top: 0;
+  }
+
+  .spec {
+    justify-content: center;
+  }
+
+  .spec + .spec {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+}
+
+/* ---------- Stack ---------- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2) var(--s2);
+  color: var(--ink2);
+  font-size: var(--fs-sub);
+}
+
+.legend .level:not(:first-child) {
+  margin-left: var(--s4);
+}
+
+.level {
+  display: inline-block;
+  flex: none;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+}
+
+.level--core {
+  background: currentcolor;
+}
+
+.level--known {
+  box-shadow: inset 0 0 0 1.5px currentcolor;
+}
+
+.rows {
+  display: grid;
+}
+
+.row {
+  display: grid;
+  gap: var(--s2) var(--s6);
+  padding-block: var(--s5);
+  border-top: 1px solid var(--line);
+}
+
+.row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.row__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s3);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.row__title .level {
+  translate: 0 -0.05em;
+}
+
+.row--soft .row__title {
+  color: var(--ink2);
+}
+
+.row__body {
+  max-width: 42em;
+  color: var(--ink2);
+}
+
+@media (min-width: 48rem) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+  }
+}
+
+.langs {
+  display: grid;
+  gap: var(--s3);
+  margin-top: var(--s7);
+}
+
+.langs__label {
+  color: var(--ink2);
+  font-size: var(--fs-sub);
+  font-weight: 600;
+}
+
+.langs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s6);
+  font-size: var(--fs-title);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.langs__item--soft {
+  color: var(--ink3);
+}
+
+/* ---------- Practice ---------- */
+.notes {
+  display: grid;
+}
+
+.notes__item {
+  max-width: 34em;
+  padding-block: var(--s5);
+  border-top: 1px solid var(--line);
+  font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+
+.notes__item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  display: grid;
+}
+
+.contact__row {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 8rem) minmax(0, 1fr) auto;
+  gap: var(--s4);
+  align-items: center;
+  min-height: 4.5rem;
+  padding-block: var(--s4);
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+}
+
+li:last-child > .contact__row {
+  border-bottom: 1px solid var(--line);
+}
+
+.contact__label {
+  color: var(--ink2);
+  font-size: var(--fs-sub);
+  font-weight: 600;
+}
+
+.contact__value {
+  font-size: var(--fs-lead);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.contact__mark {
+  color: var(--ink2);
+  font-size: var(--fs-lead);
+  transition: translate var(--dur-state) var(--ease-out);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .contact__row:hover .contact__mark {
+    translate: 0.25rem 0;
+  }
+}
+
+/* ---------- Footer ---------- */
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s5);
+  margin-top: var(--section-gap);
+}
+
+.foot__note {
+  max-width: 28em;
+  color: var(--ink2);
+  font-size: var(--fs-sub);
+}
+
+.seg {
+  position: relative;
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-capsule);
+  background: var(--bg1);
+}
+
+.seg__opt {
+  position: relative;
+  display: block;
+}
+
+.seg__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.seg__face {
+  display: grid;
+  place-items: center;
+  min-width: 4.75rem;
+  min-height: 2.75rem;
+  padding: 0 var(--s4);
+  border-radius: var(--r-capsule);
+  color: var(--ink2);
+  font-size: var(--fs-sub);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur-state) var(--ease-out), color var(--dur-state) var(--ease-out);
+}
+
+.seg__input:checked + .seg__face {
+  background: var(--fill);
+  color: var(--on-fill);
+}
+
+.seg__input:focus-visible + .seg__face {
+  outline: 3px solid var(--ink1);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .seg__input:not(:checked) + .seg__face:hover {
+    background: var(--bg2);
+    color: var(--ink1);
+  }
+}
+
+@media (forced-colors: active) {
+  .seg__input:checked + .seg__face {
+    outline: 2px solid CanvasText;
+  }
+}
+
+/* ---------- Page transitions ---------- */
+@view-transition {
+  navigation: auto;
+}
+
+.dock {
+  view-transition-name: kk-dock;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms;
+  }
+}
