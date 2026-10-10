@@ -59,7 +59,7 @@
 
 .status {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--s3);
   color: var(--ink2);
   font-size: var(--fs-sub);
@@ -67,10 +67,19 @@
 }
 
 .status__dot {
+  flex: none;
   width: 0.5rem;
   height: 0.5rem;
+  margin-top: 0.5em;
   border-radius: 50%;
   background: var(--ink1);
+}
+
+/* Compact: keep the last hero line clear of the floating bar. */
+@media (max-width: 68.74rem) {
+  .hero {
+    padding-bottom: 8rem;
+  }
 }
 
 .hero__title {

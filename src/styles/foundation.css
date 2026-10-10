@@ -125,6 +125,7 @@ svg {
   min-height: 3rem;
   padding: 0 var(--s5);
   border-radius: var(--r-capsule);
+  white-space: nowrap;
   background: var(--fill);
   color: var(--on-fill);
   font-weight: 600;
@@ -156,6 +157,12 @@ svg {
 
   .link:hover {
     text-decoration-color: currentcolor;
+  }
+}
+
+@media (max-width: 22.5rem) {
+  .btn {
+    padding-inline: var(--s4);
   }
 }
 
