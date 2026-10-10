@@ -371,9 +371,8 @@ html:has(.panel[open]) .dock {
 
 .panel__surface {
   --r-panel: 28px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  display: flex;
+  flex-direction: column;
   gap: var(--s2);
   max-height: min(72dvh, 36rem);
   padding: var(--inset);
@@ -442,8 +441,10 @@ html:has(.panel[open]) .dock {
 
 .panel__list {
   display: flex;
+  flex: 0 1 auto;
   flex-direction: column;
   gap: 2px;
+  min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
@@ -490,6 +491,36 @@ html:has(.panel[open]) .dock {
 .panel__empty {
   padding: var(--s4);
   color: var(--glass-ink2);
+}
+
+/* Theme control inside the panel: same height and concentric radii as the search field above it, on glass tokens. */
+.seg--panel {
+  --r-field: calc(var(--r-panel) - var(--inset));
+  display: flex;
+  flex: none;
+  width: 100%;
+  min-height: 3.5rem;
+  border: 0;
+  border-radius: var(--r-field);
+  background: var(--glass-rest);
+}
+
+.seg--panel .seg__opt {
+  flex: 1;
+}
+
+.seg--panel .seg__face {
+  min-width: 0;
+  padding: 0 var(--s2);
+  border-radius: calc(var(--r-field) - 4px);
+  color: var(--glass-ink2);
+}
+
+@media (hover: hover) {
+  .seg--panel .seg__input:not(:checked) + .seg__face:hover {
+    background: var(--glass-hover);
+    color: var(--ink1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

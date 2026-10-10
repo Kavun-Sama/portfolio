@@ -32,7 +32,7 @@ function paint(mode: ThemeMode): void {
   if (mode === "system") root.removeAttribute("data-theme");
   else root.dataset.theme = mode;
 
-  document.querySelectorAll<HTMLInputElement>('input[name="theme"]').forEach((input) => {
+  document.querySelectorAll<HTMLInputElement>("input[data-theme-mode]").forEach((input) => {
     input.checked = input.value === mode;
   });
   const dark = resolve(mode) === "dark";
@@ -84,7 +84,7 @@ export function initTheme(): void {
 
   document.addEventListener("change", (event) => {
     const target = event.target;
-    if (target instanceof HTMLInputElement && target.name === "theme") {
+    if (target instanceof HTMLInputElement && target.dataset.themeMode !== undefined) {
       setTheme(target.value as ThemeMode, target.closest(".seg__opt") ?? target);
     }
   });

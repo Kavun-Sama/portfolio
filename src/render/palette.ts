@@ -2,6 +2,7 @@ import { links, projects } from "../data/projects";
 import { esc } from "./html";
 import { icon } from "./icons";
 import type { Page } from "./dock";
+import { renderThemeControl } from "./theme-control";
 
 interface Entry {
   label: string;
@@ -58,5 +59,6 @@ export const renderPalette = (page: Page): string => `<dialog class="panel" data
       ${entries(page).map(item).join("\n      ")}
     </ul>
     <p class="panel__empty" data-panel-empty hidden>Nothing matches that.</p>
+    ${renderThemeControl("theme-panel", "seg--panel")}
   </div>
 </dialog>`;
