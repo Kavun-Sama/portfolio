@@ -169,6 +169,22 @@
   }
 }
 
+/* ---------- Segmented control: the pill glides to the chosen option ---------- */
+/* No overshoot here: the pill must not leave its frame. It starts after the stored choice has been applied (theme.ts). */
+@supports selector(:has(*)) {
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-seg-ready] .seg::before {
+      transition: translate var(--dur-morph) var(--ease-sheet);
+    }
+
+    html[data-seg-ready] .seg__face {
+      transition:
+        background-color var(--dur-state) var(--ease-out),
+        color var(--dur-morph) var(--ease-sheet);
+    }
+  }
+}
+
 /* ---------- Depth on scroll ---------- */
 @keyframes kk-recede {
   to {

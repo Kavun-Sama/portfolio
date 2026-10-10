@@ -493,26 +493,20 @@ html:has(.panel[open]) .dock {
   color: var(--glass-ink2);
 }
 
-/* Theme control inside the panel: same height and concentric radii as the search field above it, on glass tokens. */
-.seg--panel {
-  --r-field: calc(var(--r-panel) - var(--inset));
-  display: flex;
-  flex: none;
+/* Theme control inside the panel: the footer's capsule control at full width, on glass tokens. It is .seg.seg--panel so
+   it wins over .seg, which content.css loads later. Same height as the search field above it. */
+.seg.seg--panel {
+  display: grid;
   width: 100%;
-  min-height: 3.5rem;
-  border: 0;
-  border-radius: var(--r-field);
+  border-color: transparent;
   background: var(--glass-rest);
 }
 
-.seg--panel .seg__opt {
-  flex: 1;
-}
-
+/* Height comes from the options (a fieldset does not stretch its rows to a min-height): 46 + 2 * 4 + 2 * 1 = 56. */
 .seg--panel .seg__face {
   min-width: 0;
+  min-height: 2.875rem;
   padding: 0 var(--s2);
-  border-radius: calc(var(--r-field) - 4px);
   color: var(--glass-ink2);
 }
 

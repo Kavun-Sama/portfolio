@@ -77,6 +77,8 @@ function setTheme(mode: ThemeMode, origin: Element | null): void {
 
 export function initTheme(): void {
   paint(read());
+  // The segmented control may only animate from here on: applying the stored choice at load must not make it glide.
+  requestAnimationFrame(() => requestAnimationFrame(() => (root.dataset.segReady = "")));
 
   systemDark.addEventListener("change", () => {
     if (read() === "system") paint("system");

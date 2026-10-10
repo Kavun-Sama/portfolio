@@ -501,11 +501,15 @@ li:last-child > .contact__row {
   font-size: var(--fs-sub);
 }
 
+/* Segmented control: equal columns, a 4 px inset all round, capsule frame. The selection is a pill (see below). */
 .seg {
+  --seg-gap: 2px;
+  --seg-pad: 4px;
   position: relative;
-  display: inline-flex;
-  gap: 2px;
-  padding: 4px;
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--seg-gap);
+  padding: var(--seg-pad);
   border: 1px solid var(--line);
   border-radius: var(--r-capsule);
   background: var(--bg1);
@@ -513,7 +517,7 @@ li:last-child > .contact__row {
 
 .seg__opt {
   position: relative;
-  display: block;
+  display: grid;
 }
 
 .seg__input {
@@ -546,6 +550,35 @@ li:last-child > .contact__row {
   color: var(--on-fill);
 }
 
+/* One pill under the chosen option, concentric with the frame (both capsules, the same inset on every side).
+   Without :has() every option keeps filling itself, as above. Motion for it lives in motion.css. */
+@supports selector(:has(*)) {
+  .seg::before {
+    content: "";
+    position: absolute;
+    top: var(--seg-pad);
+    bottom: var(--seg-pad);
+    left: var(--seg-pad);
+    width: calc((100% - 2 * var(--seg-pad) - 2 * var(--seg-gap)) / 3);
+    border-radius: var(--r-capsule);
+    background: var(--fill);
+    translate: calc(var(--seg-i, 0) * (100% + var(--seg-gap)));
+    pointer-events: none;
+  }
+
+  .seg:has(.seg__opt:nth-of-type(2) > .seg__input:checked) {
+    --seg-i: 1;
+  }
+
+  .seg:has(.seg__opt:nth-of-type(3) > .seg__input:checked) {
+    --seg-i: 2;
+  }
+
+  .seg__input:checked + .seg__face {
+    background: transparent;
+  }
+}
+
 .seg__input:focus-visible + .seg__face {
   outline: 3px solid var(--ink1);
   outline-offset: 2px;
@@ -559,6 +592,10 @@ li:last-child > .contact__row {
 }
 
 @media (forced-colors: active) {
+  .seg::before {
+    display: none;
+  }
+
   .seg__input:checked + .seg__face {
     outline: 2px solid CanvasText;
   }
