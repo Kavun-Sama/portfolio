@@ -99,6 +99,44 @@ export const projects: Project[] = [
     live: { label: "try.kkkavun.pw", url: "https://try.kkkavun.pw" },
     resume:
       "Redesigned static frontend for a browser-games portal: 1,048 prerendered pages, about 16 KB of JavaScript on interior pages, full build in roughly 3.5 seconds. Design-token layer over Tailwind, motion isolated to one island behind reduced motion."
+  },
+  {
+    n: "05",
+    slug: "droso-ring",
+    name: "droso-ring",
+    kind: "Neural computing",
+    stack: "Python, PyTorch",
+    license: "MIT",
+    title: "Exact arithmetic from attractor dynamics",
+    lead: "A Drosophila-inspired processor whose answers come from simulated {hl}, not from Python's operators: numbers sit in banks of 16-sector registers, and winner-take-all dynamics settle every digit, carry and quotient.",
+    highlight: "ring-attractor dynamics",
+    facts: [
+      { value: "2,219", label: "tests" },
+      { value: "Radix-16", label: "digit registers" },
+      { value: "0.(3)", label: "1 ÷ 3, exact" }
+    ],
+    url: "https://github.com/Kavun-Sama/droso-ring",
+    resume:
+      "Drosophila-inspired neural ALU in PyTorch: exact signed addition, subtraction, multiplication and division from simulated ring-attractor dynamics instead of native operators. Radix-16 registers with carry and borrow propagation, parallel partial products, long division with repeating decimals. 2,219 tests."
+  },
+  {
+    n: "06",
+    slug: "rednote-scraper",
+    name: "rednote-scraper",
+    kind: "Crawling",
+    stack: "Python",
+    license: "AGPL-3.0-or-later",
+    title: "One signature covers every search",
+    lead: "RedNote signs every request, but {hl}, so one header pair captured from the browser serves any keyword, page or sort order — no headless browser, no signing implementation.",
+    highlight: "the signature covers only the request URI",
+    facts: [
+      { value: "≈30", unit: "× larger", label: "originals vs previews" },
+      { value: "2", unit: "cookies", label: "needed for a session" },
+      { value: "Restart-safe", label: "downloads" }
+    ],
+    url: "https://github.com/Kavun-Sama/rednote-scraper",
+    resume:
+      "Browserless CLI scraper for RedNote (Xiaohongshu) search. Request signature measured to cover only the URI, so one captured header pair serves any query; video URLs come from the server-rendered note page, image URLs are rewritten to originals about 30 times larger than previews. Parallel search, detail and download stages with restart-safe .part files."
   }
 ];
 
