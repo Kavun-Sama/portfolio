@@ -1,0 +1,235 @@
+/* Résumé: the same system as the portfolio, set as a forwardable one-pager. */
+.doc-head {
+  display: grid;
+  gap: var(--s5);
+  max-width: var(--col);
+  padding: 7rem var(--pad) var(--s7) var(--lead);
+}
+
+.doc-head__title {
+  font-size: var(--fs-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.doc-head__lead {
+  max-width: 32em;
+  color: var(--ink2);
+  font-size: var(--fs-lead);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.doc-head__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2) var(--s5);
+}
+
+.doc-section {
+  margin-top: var(--edge);
+  padding: calc(var(--pad) - var(--inset) + var(--inset)) var(--pad) var(--pad) var(--lead);
+  border-radius: var(--r-plate);
+  background: var(--bg1);
+  box-shadow: var(--plate-shadow);
+  scroll-margin-top: var(--s7);
+}
+
+.doc-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s2) var(--s5);
+  margin-bottom: var(--s5);
+  max-width: var(--measure);
+}
+
+.doc-section__title {
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.doc-section .rows,
+.doc-section .langs,
+.doc-section .notes {
+  max-width: var(--measure);
+  padding-inline: 0;
+}
+
+.doc-section .langs__list {
+  font-size: var(--fs-heading);
+}
+
+.doc-section .notes__item {
+  font-size: var(--fs-lead);
+}
+
+.entries {
+  display: grid;
+  max-width: var(--measure);
+}
+
+.entry {
+  display: grid;
+  gap: var(--s2);
+  padding-block: var(--s5);
+  border-top: 1px solid var(--line);
+}
+
+.entry:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.entry__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s1) var(--s4);
+}
+
+.entry__name {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-size: var(--fs-lead);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+@media (hover: hover) {
+  .entry__name:hover {
+    text-decoration-color: currentcolor;
+  }
+}
+
+.entry__meta {
+  color: var(--ink3);
+  font-size: var(--fs-sub);
+  font-weight: 600;
+}
+
+.entry__body {
+  max-width: 44em;
+  color: var(--ink2);
+}
+
+.doc-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  max-width: var(--col);
+  margin-top: var(--section-gap);
+  padding-right: var(--pad);
+  padding-left: var(--lead);
+}
+
+.doc-foot__note {
+  max-width: 28em;
+  color: var(--ink2);
+  font-size: var(--fs-sub);
+}
+
+/* Print: black on white, no chrome, link targets spelled out. */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  :root {
+    color-scheme: light;
+    --lead: 0px;
+    --pad: 0px;
+    --edge: 0px;
+  }
+
+  html,
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  .dock,
+  .panel,
+  .skip,
+  .foot,
+  body::after,
+  .doc-head__actions {
+    display: none !important;
+  }
+
+  .page {
+    padding: 0;
+  }
+
+  .doc-head {
+    padding: 0 0 8mm;
+  }
+
+  .doc-head__title {
+    font-size: 30pt;
+  }
+
+  .doc-head__lead,
+  .entry__body,
+  .row__body,
+  .notes__item,
+  .doc-foot__note {
+    color: #000;
+  }
+
+  .doc-section {
+    margin-top: 6mm;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .doc-section__title {
+    font-size: 15pt;
+  }
+
+  .entry__name {
+    font-size: 12pt;
+  }
+
+  .row,
+  .entry {
+    break-inside: avoid;
+    padding-block: 3mm;
+  }
+
+  .notes__item {
+    font-size: 11pt;
+    padding-block: 2mm;
+  }
+
+  .langs__list {
+    font-size: 14pt;
+  }
+
+  .doc-foot {
+    margin-top: 8mm;
+    padding: 0;
+  }
+
+  .entry__name::after,
+  .doc-foot a::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    font-weight: 400;
+  }
+}
