@@ -1,0 +1,108 @@
+/*
+ * Theme tokens. Grayscale only: every colour has zero chroma.
+ * Dark and light are designed as separate ladders, not inverted:
+ * dark separates planes by lightness steps, light by white plates on a gray page plus a soft shadow.
+ * light-dark() takes (light, dark) and follows color-scheme: system by default, forced by [data-theme].
+ */
+:root {
+  color-scheme: light dark;
+
+  /* Planes: page, plate, well */
+  --bg0: light-dark(oklch(0.955 0 0), oklch(0.145 0 0));
+  --bg1: light-dark(oklch(1 0 0), oklch(0.2 0 0));
+  --bg2: light-dark(oklch(0.973 0 0), oklch(0.244 0 0));
+
+  /* Ink */
+  --ink1: light-dark(oklch(0.17 0 0), oklch(0.97 0 0));
+  --ink2: light-dark(oklch(0.4 0 0), oklch(0.8 0 0));
+  --ink3: light-dark(oklch(0.5 0 0), oklch(0.67 0 0));
+
+  /* Strokes */
+  --line: light-dark(oklch(0 0 0 / 0.1), oklch(1 0 0 / 0.1));
+  --line-strong: light-dark(oklch(0 0 0 / 0.22), oklch(1 0 0 / 0.22));
+
+  /* Emphasis control: inverse of the page, never a hue */
+  --fill: light-dark(oklch(0.168 0 0), oklch(0.97 0 0));
+  --on-fill: light-dark(oklch(1 0 0), oklch(0.145 0 0));
+
+  /* Plate elevation: a soft shadow in light, none in dark (tonal steps do the work) */
+  --shadow-plate: light-dark(oklch(0 0 0 / 0.28), oklch(0 0 0 / 0));
+  --plate-shadow: 0 1px 0 var(--line), 0 18px 40px -24px var(--shadow-plate);
+
+  /* Liquid Glass (control layer only) */
+  --glass-tint: light-dark(oklch(0.985 0 0 / 0.66), oklch(0.235 0 0 / 0.66));
+  --glass-solid: light-dark(oklch(0.985 0 0), oklch(0.235 0 0));
+  --glass-ink2: light-dark(oklch(0.28 0 0), oklch(0.88 0 0));
+  --glass-rest: light-dark(oklch(0 0 0 / 0.06), oklch(1 0 0 / 0.08));
+  --glass-hover: light-dark(oklch(0 0 0 / 0.1), oklch(1 0 0 / 0.14));
+  --glass-active: light-dark(oklch(0 0 0 / 0.16), oklch(1 0 0 / 0.22));
+  --glass-spec: light-dark(oklch(1 0 0 / 0.95), oklch(1 0 0 / 0.34));
+  --glass-spec-dim: light-dark(oklch(1 0 0 / 0.3), oklch(1 0 0 / 0.06));
+  --glass-rim: light-dark(oklch(0 0 0 / 0.12), oklch(0 0 0 / 0.5));
+  --shadow-lg: light-dark(oklch(0 0 0 / 0.22), oklch(0 0 0 / 0.5));
+  --shadow-sm: light-dark(oklch(0 0 0 / 0.08), oklch(0 0 0 / 0.3));
+  --glass-shadow: 0 10px 30px -8px var(--shadow-lg), 0 2px 6px var(--shadow-sm);
+  --glass-blur: 22px;
+  --glass-saturate: 1.7;
+  --glass-brightness: light-dark(1.04, 0.92);
+  --scrim: light-dark(oklch(0 0 0 / 0.18), oklch(0 0 0 / 0.5));
+
+  /* Type: system stack only. SF Pro is used where the OS provides it, never shipped. */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fs-display: clamp(3rem, 1.2rem + 8.5vw, 7.5rem);
+  --fs-title: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
+  --fs-heading: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
+  --fs-lead: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);
+  --fs-body: 1.0625rem;
+  --fs-sub: 0.9375rem;
+  --fs-label: 0.8125rem;
+  --fs-figure: clamp(2.25rem, 1.6rem + 2.4vw, 3.75rem);
+
+  /* Space (4 px base) */
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: 1rem;
+  --s5: 1.5rem;
+  --s6: 2rem;
+  --s7: 3rem;
+  --s8: 4rem;
+  --section-gap: clamp(5rem, 3.5rem + 6vw, 9rem);
+
+  /* Layout */
+  --edge: 12px;
+  --pad: clamp(1.25rem, 0.9rem + 1.6vw, 2.5rem);
+  --measure: 68rem;
+  --rail-w: 5.5rem;
+  --rail-gap: 1.25rem;
+
+  /* Concentric radii: inner = outer - inset */
+  --r-plate: 28px;
+  --inset: 12px;
+  --r-well: calc(var(--r-plate) - var(--inset));
+  --r-capsule: 999px;
+
+  /* Motion */
+  --dur-press: 120ms;
+  --dur-state: 240ms;
+  --dur-morph: 420ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Increased contrast: stronger strokes, tertiary ink promoted to secondary. */
+@media (prefers-contrast: more) {
+  :root {
+    --ink3: var(--ink2);
+    --line: light-dark(oklch(0 0 0 / 0.45), oklch(1 0 0 / 0.5));
+    --line-strong: light-dark(oklch(0 0 0 / 0.7), oklch(1 0 0 / 0.8));
+  }
+}
