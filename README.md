@@ -32,7 +32,6 @@ Personal portfolio. Three static pages (portfolio, résumé, 404), no framework:
       motion.css                        view transitions, entrance, scroll-driven depth; all behind reduced-motion
       content.css                       hero, work plates, stack, notes, contact, footer
       document.css                      résumé layout and print styles
-    .design/                            brief, audit, references, concept, copy, tokens
 
 Content is rendered into the HTML at build time; the pages work without JavaScript except the theme control and the jump panel, which are hidden then.
 
