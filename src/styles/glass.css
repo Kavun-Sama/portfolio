@@ -1,0 +1,468 @@
+/*
+ * Liquid Glass: the control layer. Exactly two components use it: the navigation (rail or bar) and the jump panel.
+ * Content, plates, wells and buttons in the page are opaque.
+ * Anatomy: blurred + saturated backdrop, 66 % tint, specular rim (gradient stroke), a pointer-following highlight, a soft shadow.
+ */
+.glass {
+  --mx: 50%;
+  --my: 0%;
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-tint);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) brightness(var(--glass-brightness));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) brightness(var(--glass-brightness));
+  box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-spec-dim), inset 0 -1px 0 var(--glass-rim);
+}
+
+/* Specular rim: a 1 px gradient stroke, bright at the lit corner and the opposite edge. */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    150deg,
+    var(--glass-spec),
+    var(--glass-spec-dim) 32%,
+    transparent 55%,
+    var(--glass-spec-dim) 78%,
+    var(--glass-spec)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+/* Pointer highlight: a radial lift under the cursor. Position comes from --mx/--my set in script. */
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(10rem circle at var(--mx) var(--my), var(--glass-bloom), transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-state) var(--ease-out);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .glass:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Refraction (Chromium only, set by script): the backdrop is displaced at the rim as well as blurred. */
+.glass--refract {
+  -webkit-backdrop-filter: url("#kk-refract") blur(calc(var(--glass-blur) * 0.6)) saturate(var(--glass-saturate)) brightness(var(--glass-brightness));
+  backdrop-filter: url("#kk-refract") blur(calc(var(--glass-blur) * 0.6)) saturate(var(--glass-saturate)) brightness(var(--glass-brightness));
+}
+
+/* Fallback 1: no backdrop-filter support. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: var(--glass-solid);
+  }
+}
+
+/* Fallback 2: the user asked for less transparency. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass--refract {
+    background: var(--glass-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Fallback 3: increased contrast. Solid surface, hard edge, no rim gradient. */
+@media (prefers-contrast: more) {
+  .glass,
+  .glass--refract {
+    background: var(--glass-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: 0 0 0 1px var(--line-strong);
+  }
+
+  .glass::before,
+  .glass::after {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .glass {
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+
+  .glass::before,
+  .glass::after {
+    display: none;
+  }
+}
+
+/* ---------- Navigation: rail on wide screens, bar on compact ---------- */
+.dock {
+  position: fixed;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s2);
+  padding: var(--s3) var(--s2);
+  left: var(--rail-gap);
+  top: 50%;
+  translate: 0 -50%;
+  width: var(--rail-w);
+  max-height: calc(100dvh - var(--rail-gap) * 2);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  border-radius: calc(var(--rail-w) / 2);
+}
+
+.dock__brand {
+  display: grid;
+  place-items: center;
+  min-height: 2.75rem;
+  color: var(--ink1);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.dock__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  width: 100%;
+}
+
+.dock__li {
+  display: block;
+}
+
+.dock__sep {
+  height: 1px;
+  margin: var(--s1) var(--s3);
+  background: var(--line);
+}
+
+.dock__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 100%;
+  min-width: 2.75rem;
+  min-height: 4rem;
+  padding: var(--s2) var(--s1);
+  border-radius: calc(var(--rail-w) / 2 - var(--s2));
+  color: var(--glass-ink2);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  line-height: 1.15;
+  text-decoration: none;
+  transition: background-color var(--dur-state) var(--ease-out), transform var(--dur-press) var(--ease-out), color var(--dur-state) var(--ease-out);
+}
+
+.dock__glyph {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ico {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dock__item[aria-current="location"],
+.dock__item[aria-pressed="true"] {
+  background: var(--glass-rest);
+  color: var(--ink1);
+}
+
+.dock__item--prominent {
+  background: var(--fill);
+  color: var(--on-fill);
+}
+
+.dock__item:active {
+  background: var(--glass-active);
+  transform: scale(0.94);
+}
+
+.dock__item--prominent:active {
+  background: var(--fill);
+  opacity: 0.8;
+}
+
+@media (hover: hover) {
+  .dock__item:hover {
+    background: var(--glass-hover);
+    color: var(--ink1);
+  }
+
+  .dock__item--prominent:hover {
+    background: var(--fill);
+    color: var(--on-fill);
+    opacity: 0.88;
+  }
+}
+
+.dock__item:focus-visible {
+  outline-offset: -3px;
+}
+
+@media (forced-colors: active) {
+  .dock__item[aria-current="location"],
+  .dock__item[aria-pressed="true"],
+  .dock__item--prominent {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* Compact: the same destinations as a bottom bar, with a scroll-edge scrim so content stays legible under it. */
+@media (max-width: 68.74rem) {
+  .dock {
+    top: auto;
+    bottom: max(var(--rail-gap), env(safe-area-inset-bottom));
+    left: 50%;
+    translate: -50% 0;
+    flex-direction: row;
+    width: min(calc(100% - 1.5rem), 30rem);
+    max-height: none;
+    padding: var(--s2);
+    overflow: visible;
+    border-radius: calc(4.5rem / 2);
+  }
+
+  .dock__brand,
+  .dock__sep,
+  .dock__li--rail {
+    display: none;
+  }
+
+  .dock__list {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .dock__li {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .dock__item {
+    min-height: 3.5rem;
+    border-radius: calc(4.5rem / 2 - var(--s2));
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    z-index: 20;
+    inset: auto 0 0;
+    height: 7.5rem;
+    background: linear-gradient(to top, var(--bg0) 28%, transparent);
+    pointer-events: none;
+  }
+}
+
+/* ---------- Jump panel ---------- */
+.panel {
+  width: min(calc(100% - 1.5rem), 40rem);
+  max-width: none;
+  max-height: none;
+  margin: 12dvh auto auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink1);
+  overflow: visible;
+  transform-origin: var(--ox, 50%) var(--oy, 0%);
+  opacity: 0;
+  transform: scale(0.94) translateY(-0.5rem);
+  transition:
+    opacity var(--dur-state) var(--ease-sheet),
+    transform var(--dur-morph) var(--ease-sheet),
+    display var(--dur-morph) allow-discrete,
+    overlay var(--dur-morph) allow-discrete;
+}
+
+.panel[open] {
+  opacity: 1;
+  transform: none;
+}
+
+@starting-style {
+  .panel[open] {
+    opacity: 0;
+    transform: scale(0.94) translateY(-0.5rem);
+  }
+}
+
+/* The dim behind the panel is a plain scrim: no second blur layer. */
+.panel::backdrop {
+  background: var(--scrim);
+  opacity: 0;
+  transition: opacity var(--dur-state) var(--ease-out), display var(--dur-state) allow-discrete, overlay var(--dur-state) allow-discrete;
+}
+
+.panel[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  .panel[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+html:has(.panel[open]) .dock {
+  visibility: hidden;
+}
+
+.panel__surface {
+  --r-panel: 28px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--s2);
+  max-height: min(72dvh, 36rem);
+  padding: var(--inset);
+  border-radius: var(--r-panel);
+}
+
+.panel__field {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  min-height: 3.5rem;
+  padding: 0 var(--s2) 0 var(--s4);
+  border-radius: calc(var(--r-panel) - var(--inset));
+  background: var(--glass-rest);
+  color: var(--glass-ink2);
+}
+
+.panel__input {
+  flex: 1;
+  min-width: 0;
+  height: 3.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink1);
+  font-size: 1.0625rem;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.panel__input::placeholder {
+  color: var(--glass-ink2);
+  opacity: 1;
+}
+
+.panel__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.panel__field:has(.panel__input:focus-visible) {
+  outline: 3px solid var(--ink1);
+  outline-offset: 2px;
+}
+
+.panel__close {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 var(--s4);
+  border-radius: var(--r-capsule);
+  color: var(--glass-ink2);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  transition: background-color var(--dur-state) var(--ease-out);
+}
+
+.panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.panel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0 var(--s4);
+  border-radius: calc(var(--r-panel) - var(--inset));
+  color: var(--ink1);
+  font-size: var(--fs-body);
+  text-align: left;
+  text-decoration: none;
+  transition: background-color var(--dur-press) var(--ease-out);
+}
+
+.panel__hint {
+  flex: none;
+  color: var(--glass-ink2);
+  font-size: var(--fs-label);
+}
+
+.panel__row:focus-visible {
+  outline-offset: -3px;
+}
+
+.panel__row:active,
+.panel__close:active {
+  background: var(--glass-active);
+}
+
+@media (hover: hover) {
+  .panel__row:hover,
+  .panel__close:hover {
+    background: var(--glass-hover);
+  }
+}
+
+.panel__empty {
+  padding: var(--s4);
+  color: var(--glass-ink2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .panel[open] {
+    transform: none;
+    transition: opacity var(--dur-press) linear, display var(--dur-press) allow-discrete, overlay var(--dur-press) allow-discrete;
+  }
+
+  @starting-style {
+    .panel[open] {
+      transform: none;
+    }
+  }
+
+  .dock__item:active {
+    transform: none;
+  }
+}
