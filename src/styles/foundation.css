@@ -139,6 +139,7 @@ svg {
 .link {
   display: inline-flex;
   align-items: center;
+  gap: 0.25em;
   min-height: 2.75rem;
   font-weight: 600;
   text-decoration: underline;

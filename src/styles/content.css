@@ -231,10 +231,13 @@
 
 .spec__figure {
   font-size: var(--fs-figure);
-  font-variant-numeric: tabular-nums;
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1;
+}
+
+.spec--num .spec__figure {
+  font-variant-numeric: tabular-nums;
 }
 
 .spec--word .spec__figure {
@@ -440,6 +443,20 @@ li:last-child > .contact__row {
   font-weight: 600;
 }
 
+@media (max-width: 39.99rem) {
+  .contact__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "label mark"
+      "value mark";
+    gap: var(--s1) var(--s4);
+  }
+
+  .contact__label { grid-area: label; }
+  .contact__value { grid-area: value; }
+  .contact__mark { grid-area: mark; }
+}
+
 .contact__value {
   font-size: var(--fs-lead);
   font-weight: 600;
@@ -470,7 +487,7 @@ li:last-child > .contact__row {
 }
 
 .foot__note {
-  max-width: 28em;
+  max-width: 40em;
   color: var(--ink2);
   font-size: var(--fs-sub);
 }

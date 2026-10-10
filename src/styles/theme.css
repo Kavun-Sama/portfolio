@@ -48,7 +48,6 @@
   --glass-bloom: light-dark(oklch(1 0 0 / 0.6), oklch(1 0 0 / 0.14));
   --glass-blur: 22px;
   --glass-saturate: 1.7;
-  --glass-brightness: light-dark(1.04, 0.92);
   --scrim: light-dark(oklch(0 0 0 / 0.18), oklch(0 0 0 / 0.5));
 
   /* Type: system stack only. SF Pro is used where the OS provides it, never shipped. */
@@ -77,7 +76,7 @@
   --edge: 12px;
   --pad: clamp(1.25rem, 0.9rem + 1.6vw, 2.5rem);
   --measure: 68rem;
-  --rail-w: 5.5rem;
+  --rail-w: 5.75rem;
   --rail-gap: 1.25rem;
 
   /* Concentric radii: inner = outer - inset */

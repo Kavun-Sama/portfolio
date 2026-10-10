@@ -135,7 +135,7 @@
 }
 
 .doc-foot__note {
-  max-width: 28em;
+  max-width: 40em;
   color: var(--ink2);
   font-size: var(--fs-sub);
 }
