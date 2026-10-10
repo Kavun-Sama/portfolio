@@ -20,7 +20,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: resolve(__dirname, "index.html"),
-        resume: resolve(__dirname, "resume.html")
+        resume: resolve(__dirname, "resume.html"),
+        notFound: resolve(__dirname, "404.html")
       }
     }
   },
