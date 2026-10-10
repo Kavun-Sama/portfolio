@@ -271,7 +271,7 @@
   .dock__item {
     min-height: 3.75rem;
     border-radius: calc(var(--bar-h) / 2 - var(--s2));
-    font-size: 0.75rem;
+    font-size: var(--fs-label);
   }
 
   body::after {
@@ -379,7 +379,7 @@ html:has(.panel[open]) .dock {
   border: 0;
   background: none;
   color: var(--ink1);
-  font-size: 1.0625rem;
+  font-size: var(--fs-body);
   outline: none;
   appearance: none;
   -webkit-appearance: none;

@@ -60,7 +60,6 @@
   --fs-body: 1.0625rem;
   --fs-sub: 0.9375rem;
   --fs-label: 0.8125rem;
-  --fs-figure: clamp(2.25rem, 1.6rem + 2.4vw, 3.75rem);
 
   /* Space (4 px base) */
   --s1: 0.25rem;
