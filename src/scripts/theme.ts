@@ -5,6 +5,7 @@ const PAGE_BG = { light: "#f0f0f0", dark: "#0a0a0a" } as const;
 
 const root = document.documentElement;
 const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function read(): ThemeMode {
   try {
@@ -44,9 +45,34 @@ function paint(mode: ThemeMode): void {
   });
 }
 
-function setTheme(mode: ThemeMode): void {
+/**
+ * The new theme opens as a circle from the control that was used (a same-document view transition, see motion.css).
+ * Without the API, or with reduced motion, it simply applies.
+ */
+function reveal(origin: Element | null, update: () => void): void {
+  if (!origin || typeof document.startViewTransition !== "function" || reducedMotion.matches) {
+    update();
+    return;
+  }
+  const box = origin.getBoundingClientRect();
+  const x = box.left + box.width / 2;
+  const y = box.top + box.height / 2;
+  root.style.setProperty("--kk-x", `${(x / window.innerWidth) * 100}%`);
+  root.style.setProperty("--kk-y", `${(y / window.innerHeight) * 100}%`);
+  root.style.setProperty(
+    "--kk-r",
+    `${Math.ceil(Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y)))}px`
+  );
+  root.dataset.vt = "theme";
+  const transition = document.startViewTransition(update);
+  void transition.finished.finally(() => {
+    delete root.dataset.vt;
+  });
+}
+
+function setTheme(mode: ThemeMode, origin: Element | null): void {
   persist(mode);
-  paint(mode);
+  reveal(origin, () => paint(mode));
 }
 
 export function initTheme(): void {
@@ -58,13 +84,14 @@ export function initTheme(): void {
 
   document.addEventListener("change", (event) => {
     const target = event.target;
-    if (target instanceof HTMLInputElement && target.name === "theme") setTheme(target.value as ThemeMode);
+    if (target instanceof HTMLInputElement && target.name === "theme") {
+      setTheme(target.value as ThemeMode, target.closest(".seg__opt") ?? target);
+    }
   });
 
   document.addEventListener("click", (event) => {
     const target = event.target instanceof Element ? event.target : null;
-    if (target?.closest("[data-theme-toggle]")) {
-      setTheme(resolve(read()) === "dark" ? "light" : "dark");
-    }
+    const toggle = target?.closest("[data-theme-toggle]");
+    if (toggle) setTheme(resolve(read()) === "dark" ? "light" : "dark", toggle);
   });
 }

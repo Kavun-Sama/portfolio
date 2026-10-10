@@ -1,0 +1,95 @@
+/*
+ * Motion. A layer on top of a page that is complete without it: every animation sits behind
+ * prefers-reduced-motion: no-preference, and the scroll-driven part also behind @supports.
+ * Four ideas, one vocabulary (a damped spring, a sheet curve, a focus pull, a circle that grows from the touch):
+ *  - the glass pill is a single object that travels between dock items (pill.ts); the dock itself arrives on a spring
+ *  - pages and the theme open as a circle from the pointer (view transitions)
+ *  - on scroll, parts come into focus and tilt up from below, then recede as they leave the screen
+ *  - the hero pulls back and defocuses as the page scrolls away from it
+ * Only transform, opacity and filter move; nothing here changes layout.
+ */
+
+/* ---------- Page and theme transitions ---------- */
+@view-transition {
+  navigation: auto;
+}
+
+.dock {
+  view-transition-name: kk-dock;
+}
+
+.dock__pill {
+  view-transition-name: kk-pill;
+}
+
+/* The theme circle sweeps over the dock like any other part of the page, instead of cross-fading it on its own. */
+:root[data-vt="theme"] :is(.dock, .dock__pill) {
+  view-transition-name: none;
+}
+
+@keyframes kk-reveal {
+  from {
+    clip-path: circle(0 at var(--kk-x, 50%) var(--kk-y, 50%));
+  }
+
+  to {
+    clip-path: circle(var(--kk-r, 130vmax) at var(--kk-x, 50%) var(--kk-y, 50%));
+  }
+}
+
+/* The page that is left sinks back and dims while the next one opens over it. */
+@keyframes kk-sink {
+  to {
+    scale: 0.93;
+    filter: brightness(0.55) blur(3px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    animation: kk-sink var(--dur-sheet) var(--ease-sheet) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: kk-reveal var(--dur-sheet) var(--ease-sheet) both;
+  }
+
+  /* The dock and its pill stay in front and travel to their place on the next page. */
+  ::view-transition-group(kk-dock) {
+    animation-duration: var(--dur-sheet);
+    animation-timing-function: var(--ease-sheet);
+  }
+
+  ::view-transition-group(kk-pill) {
+    animation-duration: var(--dur-sheet);
+    animation-timing-function: var(--ease-spring);
+  }
+
+  /* The dock's two states differ in content (first item, labels): swap them quickly so the labels never overlap. */
+  ::view-transition-old(kk-dock),
+  ::view-transition-new(kk-dock) {
+    animation-duration: 180ms;
+  }
+
+  /* Theme switch: the old theme stays put, the new one opens from the control. */
+  :root[data-vt="theme"]::view-transition-old(root) {
+    animation: none;
+  }
+
+  :root[data-vt="theme"]::view-transition-new(root) {
+    animation: kk-reveal 700ms var(--ease-sheet) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms;
+  }
+}

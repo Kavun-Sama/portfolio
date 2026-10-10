@@ -563,25 +563,3 @@ li:last-child > .contact__row {
     outline: 2px solid CanvasText;
   }
 }
-
-/* ---------- Page transitions ---------- */
-@view-transition {
-  navigation: auto;
-}
-
-.dock {
-  view-transition-name: kk-dock;
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 180ms;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation-duration: 0.01ms;
-  }
-}
