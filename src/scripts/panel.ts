@@ -1,6 +1,9 @@
 import { setTheme, type ThemeMode } from "./theme";
 
 const PANEL_WIDTH = 640;
+
+/** Case- and accent-insensitive, so "resume" finds "Résumé". */
+const fold = (value: string): string => value.normalize("NFD").replace(/\p{M}+/gu, "").toLowerCase();
 const PANEL_TOP = 0.12;
 
 export function initPanel(): void {
@@ -10,14 +13,15 @@ export function initPanel(): void {
   if (!dialog || !input || !empty || typeof dialog.showModal !== "function") return;
 
   const items = [...dialog.querySelectorAll<HTMLElement>("[data-search]")];
+  const haystack = new Map(items.map((item) => [item, fold(item.dataset.search as string)]));
   const rows = (): HTMLElement[] =>
     items.filter((item) => !item.hidden).map((item) => item.firstElementChild as HTMLElement);
 
   const filter = (): void => {
-    const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+    const terms = fold(input.value).split(/\s+/).filter(Boolean);
     let shown = 0;
     for (const item of items) {
-      const hit = terms.every((term) => (item.dataset.search as string).includes(term));
+      const hit = terms.every((term) => (haystack.get(item) as string).includes(term));
       item.hidden = !hit;
       if (hit) shown += 1;
     }
@@ -59,6 +63,12 @@ export function initPanel(): void {
   input.addEventListener("input", filter);
 
   dialog.addEventListener("keydown", (event) => {
+    // A search field consumes Escape to clear itself, so the dialog's own cancel never fires from the input.
+    if (event.key === "Escape") {
+      event.preventDefault();
+      dialog.close();
+      return;
+    }
     const list = rows();
     const index = list.indexOf(document.activeElement as HTMLElement);
     if (event.key === "ArrowDown") {
