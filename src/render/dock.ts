@@ -42,8 +42,6 @@ const message: Item = {
 
 const jump = `<li class="dock__li"><button class="dock__item" type="button" data-panel-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K"><span class="dock__glyph">${icon("jump")}</span><span class="dock__label">Jump</span></button></li>`;
 
-const dark = `<li class="dock__li dock__li--rail"><button class="dock__item" type="button" data-theme-toggle aria-pressed="false"><span class="dock__glyph">${icon("theme")}</span><span class="dock__label">Dark</span></button></li>`;
-
 const sections: Record<Page, Item[]> = {
   home: [
     { label: "Work", icon: "work", href: "#work", spy: "work" },
@@ -78,7 +76,6 @@ export function renderDock(page: Page): string {
     <li class="dock__sep" aria-hidden="true"></li>
     ${pageLink[page].map(link).join("\n    ")}
     ${jump}
-    ${dark}
   </ul>
 </nav>`;
 }

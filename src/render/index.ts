@@ -12,6 +12,7 @@ import {
   renderResumeWork
 } from "./resume";
 import { renderStack } from "./stack";
+import { renderThemeToggle } from "./theme-toggle";
 import { renderWork } from "./work";
 
 /** Fragments addressable from the HTML shells as `<!-- @render name -->`. */
@@ -20,6 +21,7 @@ export const fragments: Record<string, () => string> = {
   "dock-resume": () => renderDock("resume"),
   "palette-home": () => renderPalette("home"),
   "palette-resume": () => renderPalette("resume"),
+  "theme-toggle": renderThemeToggle,
   hero: renderHero,
   work: renderWork,
   stack: renderStack,

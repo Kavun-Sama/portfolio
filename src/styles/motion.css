@@ -22,8 +22,12 @@
   view-transition-name: kk-pill;
 }
 
-/* The theme circle sweeps over the dock like any other part of the page, instead of cross-fading it on its own. */
-:root[data-vt="theme"] :is(.dock, .dock__pill) {
+.theme-btn {
+  view-transition-name: kk-theme;
+}
+
+/* The theme circle sweeps over the dock and the button like any other part of the page, instead of cross-fading them on their own. */
+:root[data-vt="theme"] :is(.dock, .dock__pill, .theme-btn) {
   view-transition-name: none;
 }
 
@@ -72,7 +76,9 @@
 
   /* The dock's two states differ in content (first item, labels): swap them quickly so the labels never overlap. */
   ::view-transition-old(kk-dock),
-  ::view-transition-new(kk-dock) {
+  ::view-transition-new(kk-dock),
+  ::view-transition-old(kk-theme),
+  ::view-transition-new(kk-theme) {
     animation-duration: 180ms;
   }
 
@@ -144,6 +150,10 @@
     animation: kk-pill 800ms var(--ease-spring) 560ms backwards;
   }
 
+  html:not([data-arrival]) .theme-btn {
+    animation: kk-item 700ms var(--ease-spring) 420ms backwards;
+  }
+
   html:not([data-arrival]) .hero > * {
     transform-origin: 0 100%;
     animation: kk-focus 1200ms var(--ease-sheet) calc(var(--n, 0) * 110ms + 160ms) backwards;
@@ -167,6 +177,18 @@
   html:not([data-arrival]) .dock {
     animation-name: kk-dock-bar;
   }
+}
+
+/* ---------- Theme button: the half-filled glyph turns over when the page goes dark ---------- */
+/* Like the segmented control below, it may only animate after the stored choice has been applied (theme.ts). */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-seg-ready] .theme-btn__glyph {
+    transition: rotate var(--dur-morph) var(--ease-sheet);
+  }
+}
+
+.theme-btn[aria-pressed="true"] .theme-btn__glyph {
+  rotate: 180deg;
 }
 
 /* ---------- Segmented control: the pill glides to the chosen option ---------- */

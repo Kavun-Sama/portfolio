@@ -1,5 +1,6 @@
 /*
- * Liquid Glass: the control layer. Exactly two components use it: the navigation (rail or bar) and the jump panel.
+ * Liquid Glass: the control layer. Exactly three components use it: the navigation (rail or bar), the jump panel and
+ * the round theme button. All three float above the content and none sits on another.
  * Content, plates, wells and buttons in the page are opaque.
  * Anatomy: blurred + saturated backdrop, 66 % tint, specular rim (gradient stroke), a pointer-following highlight, a soft shadow.
  */
@@ -315,6 +316,47 @@
   }
 }
 
+/* ---------- Theme button: one round control in the top-right corner, on every page and width ---------- */
+.theme-btn {
+  position: fixed;
+  z-index: 30;
+  top: max(var(--rail-gap), env(safe-area-inset-top));
+  right: max(var(--rail-gap), env(safe-area-inset-right));
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-capsule);
+  color: var(--ink1);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-press) var(--ease-out);
+}
+
+.theme-btn__glyph {
+  display: grid;
+  place-items: center;
+}
+
+.theme-btn:active {
+  transform: scale(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-btn:active {
+    transform: none;
+  }
+}
+
+/* .theme-btn resets the border for the normal case, which would also drop the outline .glass draws here. */
+@media (forced-colors: active) {
+  .theme-btn {
+    border: 1px solid CanvasText;
+  }
+}
+
 /* ---------- Jump panel ---------- */
 .panel {
   width: min(calc(100% - 1.5rem), 40rem);
@@ -365,7 +407,7 @@
   }
 }
 
-html:has(.panel[open]) .dock {
+html:has(.panel[open]) :is(.dock, .theme-btn) {
   visibility: hidden;
 }
 
@@ -491,30 +533,6 @@ html:has(.panel[open]) .dock {
 .panel__empty {
   padding: var(--s4);
   color: var(--glass-ink2);
-}
-
-/* Theme control inside the panel: the footer's capsule control at full width, on glass tokens. It is .seg.seg--panel so
-   it wins over .seg, which content.css loads later. Same height as the search field above it. */
-.seg.seg--panel {
-  display: grid;
-  width: 100%;
-  border-color: transparent;
-  background: var(--glass-rest);
-}
-
-/* Height comes from the options (a fieldset does not stretch its rows to a min-height): 46 + 2 * 4 + 2 * 1 = 56. */
-.seg--panel .seg__face {
-  min-width: 0;
-  min-height: 2.875rem;
-  padding: 0 var(--s2);
-  color: var(--glass-ink2);
-}
-
-@media (hover: hover) {
-  .seg--panel .seg__input:not(:checked) + .seg__face:hover {
-    background: var(--glass-hover);
-    color: var(--ink1);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

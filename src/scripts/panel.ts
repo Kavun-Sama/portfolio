@@ -67,8 +67,6 @@ export function initPanel(): void {
       dialog.close();
       return;
     }
-    // The theme control is a radio group: the arrow keys belong to it.
-    if (document.activeElement instanceof HTMLInputElement && document.activeElement.type === "radio") return;
     const list = rows();
     const index = list.indexOf(document.activeElement as HTMLElement);
     if (event.key === "ArrowDown") {

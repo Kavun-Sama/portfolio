@@ -5,10 +5,10 @@ const options = [
 ] as const;
 
 /**
- * The System / Light / Dark control. Each instance needs its own radio `name`: in one document a shared name would
- * make the page footer and the jump panel a single group. theme.ts finds the inputs by `data-theme-mode`.
+ * The System / Light / Dark control. It is the only place that can return to "System"; the round button in the
+ * corner (theme-toggle.ts) flips between light and dark. theme.ts finds the inputs by `data-theme-mode`.
  */
-export const renderThemeControl = (name: string, modifier = ""): string => `<fieldset class="seg${modifier ? ` ${modifier}` : ""}" data-theme-group>
+export const renderThemeControl = (name: string): string => `<fieldset class="seg" data-theme-group>
     <legend class="sr-only">Theme</legend>
     ${options
       .map(

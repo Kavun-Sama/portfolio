@@ -13,9 +13,11 @@
   <title>Nothing here — kkkavun</title>
   <script>try{var t=localStorage.getItem("kk_theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
   <script>addEventListener("pagereveal",function(e){var t=e.viewTransition;try{var v=sessionStorage.getItem("kk_vt");sessionStorage.removeItem("kk_vt");if(t){var o=JSON.parse(v||"null"),s=document.documentElement;s.dataset.arrival="";if(o){s.style.setProperty("--kk-x",o.x+"%");s.style.setProperty("--kk-y",o.y+"%");var W=innerWidth,H=innerHeight,x=o.x*W/100,y=o.y*H/100;s.style.setProperty("--kk-r",Math.ceil(Math.hypot(Math.max(x,W-x),Math.max(y,H-y)))+"px")}}}catch(_){}})</script>
+  <noscript><style>.theme-btn{display:none!important}</style></noscript>
   <script type="module" src="/src/scripts/app.ts"></script>
 </head>
 <body>
+  <!-- @render theme-toggle -->
   <div class="page">
     <main id="main">
       <header class="hero">
