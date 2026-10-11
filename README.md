@@ -1,6 +1,6 @@
 # kkkavun.pw
 
-Personal portfolio. Three static pages (portfolio, résumé, 404), no framework: Vite + TypeScript, plain CSS custom properties, about 3 KB of gzipped JavaScript.
+Personal portfolio. Three static pages (portfolio, résumé, 404), no framework: Vite + TypeScript, plain CSS custom properties, about 5 KB of gzipped JavaScript per page.
 
 ## Commands
 
@@ -39,13 +39,15 @@ Content is rendered into the HTML at build time; the pages work without JavaScri
 
 - Material: Liquid Glass is used for exactly three components, the navigation (side rail on wide screens, bottom bar on compact), the jump panel and the round theme button fixed in the top-right corner. None sits on another; everything in the content layer is opaque.
 - Fallbacks: no `backdrop-filter`, `prefers-reduced-transparency` and `prefers-contrast: more` all resolve to solid surfaces. `prefers-reduced-motion` turns all of it off: the pill moves instantly, view transitions last 0.01 ms, nothing is scrubbed by scroll.
-- Motion: a damped spring and a sheet curve (`--ease-spring`, `--ease-sheet`). The pill stretches over two items and settles; pages and theme changes open as a circle from the click (cross-document view transitions, Chrome/Edge 126+, Safari 18.2+); on scroll, parts come into focus and rise from below (scroll-driven animations, Chrome/Edge 115+, Safari 26; others get a one-time IntersectionObserver version). Only `transform`, `opacity` and `filter` move.
+- Motion: a damped spring and a sheet curve (`--ease-spring`, `--ease-sheet`). The pill stretches over two items and settles; pages (cross-document view transitions, Chrome/Edge 126+, Safari 18.2+) and theme changes (a same-document one) open as a circle from the click; on scroll, parts come into focus and rise from below (scroll-driven animations, Chrome/Edge 115+, Safari 26; others get a one-time IntersectionObserver version). Movement is `transform`, `opacity` and `filter`, plus `clip-path` for the circle; layout is never animated.
 - Colour: zero chroma. Dark and light are separate ladders in `theme.css`, selected with `light-dark()`; `data-theme` on `<html>` forces one of them.
 - Type: system font stack only (SF Pro where the OS provides it), body 17 px.
 - Browser floor: `light-dark()` and `oklch()` are shipped as written (`build.cssTarget` in `vite.config.ts`), so Chrome 123, Safari 17.5 and Firefox 120 or newer.
 
 ## Deploy
 
-Static output. Any host works:
+Static output. Any host that serves the site from the domain root works (asset URLs are absolute):
 
     npm run build && npx serve dist
+
+`404.html` is a page like the others: the host has to serve it for unknown paths (Netlify and GitHub Pages do it by name, Caddy needs `handle_errors`).

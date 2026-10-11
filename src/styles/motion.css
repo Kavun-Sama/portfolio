@@ -6,7 +6,7 @@
  *  - pages and the theme open as a circle from the pointer (view transitions)
  *  - on scroll, parts come into focus and tilt up from below, then recede as they leave the screen
  *  - the hero pulls back and defocuses as the page scrolls away from it
- * Only transform, opacity and filter move; nothing here changes layout.
+ * Only transform, opacity and filter move (clip-path for the circle); nothing here changes layout.
  */
 
 /* ---------- Page and theme transitions ---------- */
